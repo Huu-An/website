@@ -71,6 +71,18 @@ btnCart.addEventListener("click", (e) => {
 
 const btnSearch = document.querySelector("#btn-search");
 const inputSearch = document.querySelector("#input-search");
+
+inputSearch.addEventListener("keyup", (event) => {
+  if (event.key === "Enter") {
+    if (inputSearch.value != "") {
+      const searchContent = inputSearch.value;
+      window.location.href = `/search-result.html?query=${searchContent}`;
+    } else {
+      alert("Vui lòng không bỏ trống nội dung tìm kiếm");
+    }
+  }
+});
+
 btnSearch.addEventListener("click", (e) => {
   if (inputSearch.value != "") {
     const searchContent = inputSearch.value;

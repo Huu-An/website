@@ -140,6 +140,17 @@ if (query) {
   getProducts(query, "created_at", "desc");
 }
 
+inputSearch.addEventListener("keyup", (event) => {
+  if (event.key === "Enter") {
+    if (inputSearch.value != "") {
+      const searchContent = inputSearch.value;
+      window.location.href = `/search-result.html?query=${searchContent}`;
+    } else {
+      alert("Vui lòng không bỏ trống nội dung tìm kiếm");
+    }
+  }
+});
+
 btnSearch.addEventListener("click", (e) => {
   if (inputSearch.value != "") {
     const searchContent = inputSearch.value;
