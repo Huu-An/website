@@ -122,3 +122,7 @@ body {
   color: #007bff;
   font-weight: bold;
 }
+
+.card {
+  cursor: pointer;
+}

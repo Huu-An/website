@@ -100,7 +100,7 @@ const getProducts = async (searchText, sortBy, order) => {
       const formattedRentPrice = Intl.NumberFormat();
       const name = product.title;
       const template = `
-        <div class="card card-custom border border-0 px-0" style="max-width: 350px;">
+        <div class="card card-custom border border-0 px-0 mt-1" style="max-width: 400px;">
               <div class="row-fluid d-flex justify-content-center img-card">
                 <img
                   src="https://s3-alpha-sig.figma.com/img/ad7b/c365/6c4f0e652bf823a17c9a06c674b2bccb?Expires=1739750400&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=aV80iV-jvosoH0BIhJVaeQ6pncqwacBZIcbOj8GUiFPjJY1Ip8wqPzPCxUgCmd-3U2ZC-3s6SCpm7loybXPLMitaeAg0AkH8h7ly0ukbgC2GSjiTiSpiqhm6f13674ALSrDb2N26gL8CbkZXlqRVumhYptdHl5hw1pxkymgzfjmhwR4H4oSk2HJGMNQNY1-8YEI2dSgmDase0xocqSyyvWxfoU197B0QbBB6nLJKySpzBvJKrWRpxnBXWJkfoGnbo50Vx8EJ-vD-EMaqUgTdPI2o7oxEoRHeGiCA0o2fO8WSoQUAZoqVRA7LBm9VnkMonszTUGo5NbqrDGDJveUmgQ__"
@@ -159,3 +159,11 @@ btnSearch.addEventListener("click", (e) => {
     alert("Vui lòng không bỏ trống nội dung tìm kiếm");
   }
 });
+
+// const displayProduct = document.querySelector("#matched-products");
+// const productCards = displayProduct.querySelectorAll(".card");
+// productCards.forEach((card) => {
+//   card.addEventListener("click", (event) => {
+//     alert(card.id);
+//   });
+// });
