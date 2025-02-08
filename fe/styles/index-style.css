@@ -1,0 +1,124 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  width: 100%;
+  height: 100vh;
+}
+
+#header,
+#search,
+#footer {
+  background-color: #0345E4;
+}
+
+#logo {
+  width: 50px;
+  height: auto;
+}
+
+#btn-rent {
+  background-color: #FF7264;
+  padding: 0 25px;
+}
+
+#in-search {
+  background-color: #ffff;
+}
+
+#btn-search {
+  background-color: #FF7264;
+  padding: 10px;
+}
+
+#img-bct {
+  width: 200px;
+}
+
+.cmt-box {
+  background-color: #D9D9D94D;
+  max-width: 350px;
+  max-height: 300px;
+  overflow: hidden;
+}
+
+.card-img-top {
+  border-radius: 15px 0px !important;
+}
+
+.card-custom {
+  max-width: 18rem;
+  border: none;
+  position: relative;
+  overflow: hidden;
+}
+
+.image-overlay {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.heart-icon {
+  position: absolute;
+  bottom: 20%;
+  left: 0;
+  margin: 10px 5px;
+  font-size: 1.2rem;
+  color: red;
+  padding: 0.2rem 0.4rem;
+  border-top-right-radius: 5px;
+}
+
+#input-search:focus,
+#locationSelect:focus {
+  outline: none !important;
+  box-shadow: none;
+}
+
+.checkbox-round {
+  width: 2em;
+  height: 2em;
+  border-radius: 50%;
+  /* vertical-align: middle; */
+  border: 1px solid #ddd;
+  appearance: none;
+  -webkit-appearance: none;
+  outline: none;
+  cursor: pointer;
+  background-color: #D9D9D9;
+  position: absolute;
+  bottom: 25%;
+  right: 10px;
+}
+
+.checkbox-round:checked {
+  background-color: #FF7264;
+  border: none;
+}
+
+.bookmark-icon {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 5px;
+  font-size: 1.5rem;
+  color: #007bff;
+  padding: 0.2rem 0.4rem;
+  border-bottom-left-radius: 5px;
+}
+
+.bookmark-icon {
+  color: #007bff;
+}
+
+.price {
+  color: #007bff;
+  font-weight: bold;
+}
