@@ -80,11 +80,64 @@ const inputSearch = document.querySelector("#input-search");
 const searchContent = inputSearch.value;
 
 const query = getQuery();
+const getProducts = async (searchText, sortBy, order) => {
+  const API_ENDPOINT = `${API_ROOT}/rent/list?text=${searchText}&sort_by=${sortBy}&order=${order}`;
+  const response = await fetch(API_ENDPOINT,
+    {
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Credentials": true
+      }
+    }
+  );
+
+  const data = await response.json();
+  if (data.data.length != 0) {
+    data.data.forEach((product) => {
+      const id = product.id;
+      const imgURL = product.images[0];
+      const rentPrice = product.rent_price[0].price;
+      const formattedRentPrice = Intl.NumberFormat();
+      const name = product.title;
+      const template = `
+        <div class="card card-custom border border-0 px-0" style="max-width: 350px;">
+              <div class="row-fluid d-flex justify-content-center img-card">
+                <img
+                  src="https://s3-alpha-sig.figma.com/img/ad7b/c365/6c4f0e652bf823a17c9a06c674b2bccb?Expires=1739750400&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=aV80iV-jvosoH0BIhJVaeQ6pncqwacBZIcbOj8GUiFPjJY1Ip8wqPzPCxUgCmd-3U2ZC-3s6SCpm7loybXPLMitaeAg0AkH8h7ly0ukbgC2GSjiTiSpiqhm6f13674ALSrDb2N26gL8CbkZXlqRVumhYptdHl5hw1pxkymgzfjmhwR4H4oSk2HJGMNQNY1-8YEI2dSgmDase0xocqSyyvWxfoU197B0QbBB6nLJKySpzBvJKrWRpxnBXWJkfoGnbo50Vx8EJ-vD-EMaqUgTdPI2o7oxEoRHeGiCA0o2fO8WSoQUAZoqVRA7LBm9VnkMonszTUGo5NbqrDGDJveUmgQ__"
+                  class="card-img-top" alt="iPhone 15 Pro" style="width: 100%; height: auto;">
+                <div class="image-overlay">
+                  <span class="heart-icon">
+                    <i class="fa fa-heart" aria-hidden="true" style="color: #FF7264;"></i>
+                    <i class="fa fa-heart" aria-hidden="true" style="color: #FF7264;"></i>
+                    <i class="fa fa-heart" aria-hidden="true" style="color: #FF7264;"></i>
+                    <i class="fa fa-heart" aria-hidden="true" style="color: #FF7264;"></i>
+                    <i class="fa fa-heart" aria-hidden="true" style="color: #FF7264;"></i>
+                  </span>
+                  <i class="fa fa-bookmark-o bookmark-icon" style="font-size: 25px; font-weight: 800;"
+                    aria-hidden="true"></i>
+                  <input type="checkbox" name="${id}" class="checkbox-round">
+                </div>
+              </div>
+              <div class="card-body p-1 mt-1">
+                <h6 class="card-title">${name}</h6>
+                <p class="price" style="color: #0345E4;">${formattedRentPrice.format(rentPrice)}₫/day</p>
+              </div>
+            </div>`;
+      const displayMatchedProduct = document.querySelector("#matched-products");
+      displayMatchedProduct.innerHTML += template;
+    });
+  } else {
+    const displayMatchedProduct = document.querySelector("#matched-products");
+    displayMatchedProduct.innerHTML += `<h3>Không tìm thấy kết quả phù hợp!</h3>`;
+  }
+};
+
 if (query) {
   const readableQuery = query;
   inputSearch.value = readableQuery;
   const displaySearchQuery = document.querySelector("#search-query");
   displaySearchQuery.textContent = `"${query}"`;
+  getProducts(query, "created_at", "desc");
 }
 
 btnSearch.addEventListener("click", (e) => {
