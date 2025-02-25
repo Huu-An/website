@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
   <meta charset="UTF-8">
   <title>Cho Thuê Sản Phẩm</title>
@@ -19,6 +20,7 @@
       margin: 0;
       padding: 0;
     }
+
     body {
       font-family: 'Quicksand', sans-serif;
       background: #F3F7FF;
@@ -27,10 +29,12 @@
 
     /* Header */
     header {
-      background: #0056B3; /* màu xanh đậm cho thanh trên */
+      background: #0056B3;
+      /* màu xanh đậm cho thanh trên */
       color: #fff;
       padding: 15px 20px;
     }
+
     header .header-content {
       max-width: 1200px;
       margin: 0 auto;
@@ -38,15 +42,18 @@
       align-items: center;
       justify-content: space-between;
     }
+
     .header-left h1 {
       font-size: 24px;
       font-weight: bold;
     }
+
     .header-right {
       display: flex;
       align-items: center;
       gap: 30px;
     }
+
     .header-right .location,
     .header-right .date-range {
       font-size: 14px;
@@ -72,7 +79,7 @@
     .form-wrapper {
       background: #fff;
       border-radius: 16px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
       padding: 30px;
       margin-bottom: 40px;
     }
@@ -81,11 +88,13 @@
     .form-step {
       margin-bottom: 25px;
     }
+
     .step-header {
       display: flex;
       align-items: center;
       margin-bottom: 10px;
     }
+
     .step-number {
       width: 32px;
       height: 32px;
@@ -98,13 +107,16 @@
       font-weight: bold;
       margin-right: 10px;
     }
+
     .step-title {
       font-size: 16px;
       font-weight: bold;
       color: #333;
     }
+
     .step-input {
-      margin-left: 42px; /* canh để không đè lên số thứ tự */
+      margin-left: 42px;
+      /* canh để không đè lên số thứ tự */
     }
 
     /* Các trường input */
@@ -119,10 +131,12 @@
       font-size: 14px;
       outline: none;
     }
+
     .step-input textarea {
       resize: vertical;
       min-height: 80px;
     }
+
     .step-input small {
       display: block;
       margin-top: 5px;
@@ -136,15 +150,19 @@
       grid-template-columns: repeat(4, 1fr);
       gap: 15px;
     }
+
     .image-item {
       width: 100%;
-      padding-bottom: 75%; /* giữ tỷ lệ hình vuông hoặc 4:3 tùy chỉnh */
+      height: 200px;
+      /* padding-bottom: 75%; */
+      /* giữ tỷ lệ hình vuông hoặc 4:3 tùy chỉnh */
       background: #F0F0F0;
       border: 2px dashed #ccc;
       border-radius: 8px;
       position: relative;
       cursor: pointer;
     }
+
     .image-item .camera-icon {
       position: absolute;
       top: 50%;
@@ -160,7 +178,8 @@
       gap: 20px;
       margin-bottom: 10px;
     }
-    .price-row > div {
+
+    .price-row>div {
       flex: 1;
     }
 
@@ -175,6 +194,13 @@
       cursor: pointer;
       margin-top: 10px;
     }
+
+    .image-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: fill;
+    }
+
     .submit-btn:hover {
       background: #003F8A;
     }
@@ -186,6 +212,7 @@
       font-size: 14px;
       padding: 20px;
     }
+
     footer .footer-links {
       margin-top: 5px;
       font-size: 13px;
@@ -193,75 +220,75 @@
     }
   </style>
 </head>
+
 <body>
-  
-    <div class="container-fluid">
-        <div id="header" class="row p-3">
-          <div class="col-1 px-3 mx-auto mt-3">
-            <a href="/"><img src="./images/white-logo.png" alt="logo" id="logo" style="width: 60px; height: 60px;"></a>
-          </div>
-          <div id="search" class="col-7 d-flex-column justify-content-center">
-            <div id="search-product" class="w-100">
-              <div class="mt-3 row rounded rounded-5" id="in-search">
-                <div class="input-group flex-nowrap" style="padding: 5px 10px;">
-                  <span class="input-group-text" id="addon-wrapping"
-                    style="background-color: white !important; border: none;"><i class="fa fa-search"></i></span>
-                  <input type="text" class="form-control" style="border: none !important; width: 87%;"
-                    placeholder="Bạn đang tìm kiếm sản phẩm gì?" aria-label="search-input" aria-describedby="addon-wrapping"
-                    id="input-search">
-                  <button class="btn text-white rounded rounded-5" style="font-size: 15px;" type="button"
-                    id="btn-search">Tìm kiếm</button>
-                </div>
-              </div>
-              <div class="row text-white text-center mt-1 mb-3">
-                <div class="dropdown col">
-                  <span class="align-middle"><i class="fa fa-location-arrow" aria-hidden="true"></i> Gần </span>
-                  <div class="btn-group">
-                    <button class="btn btn-sm dropdown-toggle text-white fw-bold" style="font-size: 16px;" type="button"
-                      id="locationSelect" data-bs-toggle="dropdown" aria-expanded="false"> Mỹ Thạnh, Thủ Đức </button>
-                    <ul class="dropdown-menu w-100">
-                      <li><a class="dropdown-item" href="#">Bình Dương</a></li>
-                      <li><a class="dropdown-item" href="#">Bình Dương</a></li>
-                      <li><a class="dropdown-item" href="#">Bình Dương</a></li>
-                    </ul>
-                  </div>
-                </div>
-                <div class="dropdown col">
-                  <span class="align-middle"><i class="fa fa-calendar" aria-hidden="true"></i> Thời gian thuê </span>
-                  <div class="btn-group">
-                    <button class="btn btn-sm dropdown-toggle text-white fw-bold" style="font-size: 16px;" type="button"
-                      id="rentalDate" data-bs-toggle="dropdown" aria-expanded="false"> 26 thg 10, 2024 - 2 thg 11, 2024
-                    </button>
-                    <ul class="dropdown-menu w-100">
-                      <li><a class="dropdown-item" href="#">Bình Dương</a></li>
-                      <li><a class="dropdown-item" href="#">Bình Dương</a></li>
-                      <li><a class="dropdown-item" href="#">Bình Dương</a></li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
+  <div class="container-fluid">
+    <div id="header" class="row p-3">
+      <div class="col-1 px-3 mx-auto mt-3">
+        <a href="/"><img src="./images/white-logo.png" alt="logo" id="logo" style="width: 60px; height: 60px;"></a>
+      </div>
+      <div id="search" class="col-7 d-flex-column justify-content-center">
+        <div id="search-product" class="w-100">
+          <div class="mt-3 row rounded rounded-5" id="in-search">
+            <div class="input-group flex-nowrap" style="padding: 5px 10px;">
+              <span class="input-group-text" id="addon-wrapping"
+                style="background-color: white !important; border: none;"><i class="fa fa-search"></i></span>
+              <input type="text" class="form-control" style="border: none !important; width: 87%;"
+                placeholder="Bạn đang tìm kiếm sản phẩm gì?" aria-label="search-input" aria-describedby="addon-wrapping"
+                id="input-search">
+              <button class="btn text-white rounded rounded-5" style="font-size: 15px;" type="button"
+                id="btn-search">Tìm kiếm</button>
             </div>
           </div>
-          <div class="col-4">
-            <div class="w-100 d-flex justify-content-center mt-3 pt-1">
-              <button class="btn text-white rounded rounded-5 px-3 pt-1 pb-1" id="btn-rent">Cho thuê sản phẩm</button>
-              <button class="btn">
-                <img src="./images/lang-vn.jpg" alt="" style="width: 25px; height: 25px;" class="rounded rounded-circle">
-                <span class="text-white">VN</span>
-              </button>
-              <button class="btn" id="btn-user-info">
-                <i class="fa fa-user-circle text-white" aria-hidden="true" style="font-size: 1.3em;"></i>
-              </button>
-              <button class="btn" id="btn-cart">
-                <i class="fa fa-shopping-cart text-white" aria-hidden="true" style="font-size: 1.3em;"></i>
-              </button>
-              <button class="btn">
-                <i class="fa fa-bars text-white" aria-hidden="true" style="font-size: 1.3em;"></i>
-              </button>
+          <div class="row text-white text-center mt-1 mb-3">
+            <div class="dropdown col">
+              <span class="align-middle"><i class="fa fa-location-arrow" aria-hidden="true"></i> Gần </span>
+              <div class="btn-group">
+                <button class="btn btn-sm dropdown-toggle text-white fw-bold" style="font-size: 16px;" type="button"
+                  id="locationSelect" data-bs-toggle="dropdown" aria-expanded="false"> Mỹ Thạnh, Thủ Đức </button>
+                <ul class="dropdown-menu w-100">
+                  <li><a class="dropdown-item" href="#">Bình Dương</a></li>
+                  <li><a class="dropdown-item" href="#">Bình Dương</a></li>
+                  <li><a class="dropdown-item" href="#">Bình Dương</a></li>
+                </ul>
+              </div>
+            </div>
+            <div class="dropdown col">
+              <span class="align-middle"><i class="fa fa-calendar" aria-hidden="true"></i> Thời gian thuê </span>
+              <div class="btn-group">
+                <button class="btn btn-sm dropdown-toggle text-white fw-bold" style="font-size: 16px;" type="button"
+                  id="rentalDate" data-bs-toggle="dropdown" aria-expanded="false"> 26 thg 10, 2024 - 2 thg 11, 2024
+                </button>
+                <ul class="dropdown-menu w-100">
+                  <li><a class="dropdown-item" href="#">Bình Dương</a></li>
+                  <li><a class="dropdown-item" href="#">Bình Dương</a></li>
+                  <li><a class="dropdown-item" href="#">Bình Dương</a></li>
+                </ul>
+              </div>
             </div>
           </div>
         </div>
       </div>
+      <div class="col-4">
+        <div class="w-100 d-flex justify-content-center mt-3 pt-1">
+          <button class="btn text-white rounded rounded-5 px-3 pt-1 pb-1" id="btn-rent">Cho thuê sản phẩm</button>
+          <button class="btn">
+            <img src="./images/lang-vn.jpg" alt="" style="width: 25px; height: 25px;" class="rounded rounded-circle">
+            <span class="text-white">VN</span>
+          </button>
+          <button class="btn" id="btn-user-info">
+            <i class="fa fa-user-circle text-white" aria-hidden="true" style="font-size: 1.3em;"></i>
+          </button>
+          <button class="btn" id="btn-cart">
+            <i class="fa fa-shopping-cart text-white" aria-hidden="true" style="font-size: 1.3em;"></i>
+          </button>
+          <button class="btn">
+            <i class="fa fa-bars text-white" aria-hidden="true" style="font-size: 1.3em;"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
   <!-- Nội dung chính -->
   <div class="container">
     <h2 class="page-title">Bạn muốn cho thuê sản phẩm gì?</h2>
@@ -282,7 +309,6 @@
           </select>
         </div>
       </div>
-
       <!-- Bước 2 -->
       <div class="form-step">
         <div class="step-header">
@@ -292,12 +318,10 @@
         <div class="step-input">
           <label for="title">Tiêu đề</label>
           <input type="text" id="title" name="title" placeholder="Nhập tiêu đề sản phẩm" required>
-
           <label for="description" style="margin-top:15px; display:block;">Mô tả sản phẩm</label>
           <textarea id="description" name="description" placeholder="Càng chi tiết càng tốt" required></textarea>
         </div>
       </div>
-
       <!-- Bước 3 -->
       <div class="form-step">
         <div class="step-header">
@@ -305,39 +329,40 @@
           <div class="step-title">Hình ảnh</div>
         </div>
         <div class="step-input">
-          <small>Tải lên ít nhất 5 hình ảnh và 2 video (tỷ lệ ngang 4:3). Ảnh chân dung sẽ không được hiển thị đầy đủ.</small>
+          <small>Tải lên ít nhất 5 hình ảnh và 2 video (tỷ lệ ngang 4:3). Ảnh chân dung sẽ không được hiển thị đầy
+            đủ.</small>
           <!-- Bố trí 8 khung hình (hoặc tuỳ ý) để người dùng upload -->
           <div class="image-grid" style="margin-top:15px;">
-            <div class="image-item">
+            <div class="image-item" id="icon-1">
               <span class="camera-icon">&#128247;</span>
             </div>
-            <div class="image-item">
+            <div class="image-item" id="icon-2">
               <span class="camera-icon">&#128247;</span>
             </div>
-            <div class="image-item">
+            <div class="image-item" id="icon-4">
               <span class="camera-icon">&#128247;</span>
             </div>
-            <div class="image-item">
+            <div class="image-item" id="icon-5">
               <span class="camera-icon">&#128247;</span>
             </div>
-            <div class="image-item">
+            <div class="image-item" id="icon-6">
               <span class="camera-icon">&#128247;</span>
             </div>
-            <div class="image-item">
+            <div class="image-item" id="icon-7">
               <span class="camera-icon">&#128247;</span>
             </div>
-            <div class="image-item">
+            <div class="image-item" id="icon-8">
               <span class="camera-icon">&#128247;</span>
             </div>
-            <div class="image-item">
+            <div class="image-item" id="icon-9">
               <span class="camera-icon">&#128247;</span>
             </div>
           </div>
           <!-- Input file thật (ẩn hoặc tuỳ ý) -->
-          <input type="file" name="images[]" multiple style="margin-top:10px;">
+          <!-- <input type="file" name="images[]" multiple style="margin-top:10px;">-->
+          <input type="file" id="fileInput" accept="image/*" style="display: none;">
         </div>
       </div>
-
       <!-- Bước 4 -->
       <div class="form-step">
         <div class="step-header">
@@ -359,10 +384,10 @@
               <input type="number" id="price7" name="price7" placeholder="VNĐ" required>
             </div>
           </div>
-          <small>Bạn có thể cung cấp giá thấp hơn cho các lần thuê dài ngày. Giá thuê sẽ tính theo mức giá thấp nhất.</small>
+          <small>Bạn có thể cung cấp giá thấp hơn cho các lần thuê dài ngày. Giá thuê sẽ tính theo mức giá thấp
+            nhất.</small>
         </div>
       </div>
-
       <!-- Bước 5 -->
       <div class="form-step">
         <div class="step-header">
@@ -373,7 +398,6 @@
           <input type="text" name="delivery" placeholder="Nhập địa chỉ giao hàng" required>
         </div>
       </div>
-
       <!-- Bước 6 -->
       <div class="form-step">
         <div class="step-header">
@@ -390,7 +414,6 @@
           <small>Dễ - Hủy trước 2 ngày so với thời gian thuê, 100% hoàn lại. Trước 1 ngày, 50% hoàn lại.</small>
         </div>
       </div>
-
       <!-- Bước 7 -->
       <div class="form-step">
         <div class="step-header">
@@ -398,15 +421,14 @@
           <div class="step-title">Giá trị của mặt hàng</div>
         </div>
         <div class="step-input">
-          <input type="number" name="product_value" placeholder="Nếu bán ngay hôm nay trên Marketplace, giá bao nhiêu?" required>
+          <input type="number" name="product_value" placeholder="Nếu bán ngay hôm nay trên Marketplace, giá bao nhiêu?"
+            required>
         </div>
       </div>
-
       <!-- Nút Đăng tin -->
-      <button type="submit" class="submit-btn">Đăng tin!</button>
+      <button type="submit" class="submit-btn" id="btn-post">Đăng tin!</button>
     </div>
   </div>
-
   <footer id="footer" class="row text-white column-gap-3 w-100 mx-0" style="padding: 5% 12% 12% 5%;">
     <div class="col">
       <h5 class="mb-3">Giới thiệu TER</h5>
@@ -459,5 +481,109 @@
       </div>
     </div>
   </footer>
+  <script>
+    const checkAuthen = () => {
+      if (document.cookie == "") {
+        window.location.href = "/login.html";
+      }
+    };
+
+    checkAuthen();
+
+    document.querySelectorAll('.image-item').forEach(item => {
+      item.addEventListener('click', function () {
+        const fileInput = document.getElementById('fileInput');
+        fileInput.dataset.targetId = this.id;
+        fileInput.click();
+      });
+    });
+
+    document.getElementById('fileInput').addEventListener('change', function (event) {
+      const file = event.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          const targetId = event.target.dataset.targetId;
+          const targetElement = document.getElementById(targetId);
+          targetElement.innerHTML = `<img src="${e.target.result}" alt="Uploaded Image">`;
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+
+    document.querySelector("#btn-post").addEventListener("click", (e) => {
+      const danhMuc = document.querySelector("select[name=category]");
+      const tieuDe = document.querySelector("#title");
+      const moTa = document.querySelector("#description");
+      const hinhAnh = document.querySelectorAll(".image-item img");
+      const gia1 = document.querySelector("#price1");
+      const gia3 = document.querySelector("#price3");
+      const gia7 = document.querySelector("#price7");
+      const diaChi = document.querySelector("input[name=delivery]");
+      const dieuKhoanHuy = document.querySelector("select[name=cancellation]");
+      const giaTri = document.querySelector("input[name=product_value]");
+
+      const danhMucSelected = danhMuc.options[danhMuc.selectedIndex].text;
+      const tieuDeSelected = tieuDe.value;
+      const moTaSelected = moTa.value;
+      const gia1Value = gia1.value;
+      const gia3Value = gia3.value;
+      const gia7Value = gia7.value;
+      const diaChiSelected = diaChi.value;
+      const dieuKhoanHuySelected = dieuKhoanHuy.selectedIndex;
+      const giaTriValue = giaTri.value;
+
+      if (danhMuc.selectedIndex == 0 || tieuDe.value == "" || moTa.value == "" ||
+        gia1.value == "" || gia3.value == "" || gia7.value == "" || diaChi.value == "" ||
+        dieuKhoanHuy.selectedIndex == 0 || giaTri.value == "") {
+        alert("Vui lòng không bỏ trống bất kỳ trường thông tin nào");
+      } else {
+        body = {
+          "category": danhMucSelected,
+          "title": tieuDeSelected,
+          "description": moTaSelected,
+          "images": [
+            "string"
+          ],
+          "video": [
+            "string"
+          ],
+          "rent_price": [
+            {
+              "price": gia1Value,
+              "time": "for_1_days"
+            },
+            {
+              "price": gia3Value,
+              "time": "for_3_days"
+            },
+            {
+              "price": gia7Value,
+              "time": "for_7_days"
+            }
+          ],
+          "address": diaChiSelected,
+          "cancel_policy": dieuKhoanHuySelected - 1,
+          "sell_price": giaTriValue
+        }
+
+        const rentAPI = async () => {
+          const rawResponse = await fetch('http://157.66.81.167:8000/rent/create', {
+            method: 'POST',
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json',
+              'Authorization': 'Bearer ' + document.cookie.replace("token=", "")
+            },
+            body: JSON.stringify(body)
+          });
+          const content = await rawResponse.json();
+          console.log(content);
+        };
+        rentAPI();
+      }
+    });
+  </script>
 </body>
+
 </html>

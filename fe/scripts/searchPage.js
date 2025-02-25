@@ -100,10 +100,10 @@ const getProducts = async (searchText, sortBy, order) => {
       const formattedRentPrice = Intl.NumberFormat();
       const name = product.title;
       const template = `
-        <div class="card card-custom border border-0 px-0 mt-1" style="max-width: 400px;">
+        <div class="card card-custom border border-0 px-0 mt-1" style="max-width: 400px;" onclick=goToProduct(${id});>
               <div class="row-fluid d-flex justify-content-center img-card">
                 <img
-                  src="https://s3-alpha-sig.figma.com/img/ad7b/c365/6c4f0e652bf823a17c9a06c674b2bccb?Expires=1739750400&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=aV80iV-jvosoH0BIhJVaeQ6pncqwacBZIcbOj8GUiFPjJY1Ip8wqPzPCxUgCmd-3U2ZC-3s6SCpm7loybXPLMitaeAg0AkH8h7ly0ukbgC2GSjiTiSpiqhm6f13674ALSrDb2N26gL8CbkZXlqRVumhYptdHl5hw1pxkymgzfjmhwR4H4oSk2HJGMNQNY1-8YEI2dSgmDase0xocqSyyvWxfoU197B0QbBB6nLJKySpzBvJKrWRpxnBXWJkfoGnbo50Vx8EJ-vD-EMaqUgTdPI2o7oxEoRHeGiCA0o2fO8WSoQUAZoqVRA7LBm9VnkMonszTUGo5NbqrDGDJveUmgQ__"
+                  src="https://s3-alpha-sig.figma.com/img/ad7b/c365/6c4f0e652bf823a17c9a06c674b2bccb?Expires=1741564800&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=l8fUt~e3yzsDRdvDzoLg-ZMgeEFThrS6ACxr-toyGCEZvD4F4nMD3EXQxNWjaQcIMqYi6llJlppDO~YWl6b2dmVS7A~mYusUfc0WeD3t0bz8-Thji2YkQXG8E~d0Af1a60SjCdjJx8v7FYdoTtRXKNFHG8b9ZfSRThA1kKCM02uunQJDZfDxU3XQHzPmjNgm4pweScDolmsupja0IN~2Du~TGh-jhrEI2OmR0LzBWoLCh6Pz742C8QbFtKWKcZgpIK6EwPaZlaG~150R5AGAKmELpY0O30bXBNLhXzrlB8D-dWAi~YCWlEuKuQTxHGa-1t82~cN0GmaRwQaUBN1lcw__"
                   class="card-img-top" alt="iPhone 15 Pro" style="width: 100%; height: auto;">
                 <div class="image-overlay">
                   <span class="heart-icon">
@@ -160,10 +160,6 @@ btnSearch.addEventListener("click", (e) => {
   }
 });
 
-// const displayProduct = document.querySelector("#matched-products");
-// const productCards = displayProduct.querySelectorAll(".card");
-// productCards.forEach((card) => {
-//   card.addEventListener("click", (event) => {
-//     alert(card.id);
-//   });
-// });
+const goToProduct = (id) => {
+  window.location.href = `/product.html?id=${id}`;
+};
