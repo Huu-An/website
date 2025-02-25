@@ -1,5 +1,5 @@
 const ROOT = "127.0.0.1:5500";
-const EXPIRE_TIME = 1;
+const EXPIRE_TIME = 5;
 const API_ROOT = "http://157.66.81.167:8000"
 
 const getOAuthToken = () => {
@@ -95,3 +95,7 @@ btnSearch.addEventListener("click", (e) => {
 const findProduct = (id) => {
   window.location.href = "/view-product.html";
 };
+
+document.querySelector("#btn-rent").addEventListener("click", () => {
+  window.location.href = "/import.html";
+});
