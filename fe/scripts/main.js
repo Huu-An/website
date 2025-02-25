@@ -91,3 +91,7 @@ btnSearch.addEventListener("click", (e) => {
     alert("Vui lòng không bỏ trống nội dung tìm kiếm");
   }
 });
+
+const findProduct = (id) => {
+  window.location.href = "/view-product.html";
+};

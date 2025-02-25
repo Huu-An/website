@@ -141,15 +141,15 @@
                     </div>
                     <div class="mt-5">
                         <h5 style="color: gray;">Cam kết</h5>
-                        <p style="font-weight: bold; color: black;">TER bảo hiểm thiệt hại lên đến 5.000.000 VNĐ cho mỗi mặt hàng <a href=""
-                                style="color: blue;">Đọc thêm</a></h6>
+                        <p style="font-weight: bold; color: black;">TER bảo hiểm thiệt hại lên đến 5.000.000 VNĐ cho mỗi
+                            mặt hàng <a href="" style="color: blue;">Đọc thêm</a></h6>
                     </div>
                     <div class="mt-5">
                         <h5 style="color: gray;">Điều kiện hủy bỏ</h5>
-                        <p style="font-weight: bold; color: black;">Trong trường hợp hủy trước 2 ngày so với thời gian thuê, 100% số tiền thuê sẽ được hoàn lại.
-                            Nếu hủy trước một ngày so với thời gian thuê, 50% số tiền thuê sẽ được hoàn lại. Nếu bạn hủy
-                            vào cùng ngày thời gian thuê bắt đầu, sẽ không được hoàn lại tiền. <a href=""
-                                style="color: blue;">Đọc thêm</a></h6>
+                        <p style="font-weight: bold; color: black;">Trong trường hợp hủy trước 2 ngày so với thời gian
+                            thuê, 100% số tiền thuê sẽ được hoàn lại. Nếu hủy trước một ngày so với thời gian thuê, 50%
+                            số tiền thuê sẽ được hoàn lại. Nếu bạn hủy vào cùng ngày thời gian thuê bắt đầu, sẽ không
+                            được hoàn lại tiền. <a href="" style="color: blue;">Đọc thêm</a></h6>
                     </div>
                 </div>
             </div>
@@ -207,7 +207,7 @@
                         </div>
                     </div>
                     <!-- Nút Thuê ngay -->
-                    <button class="btn">Thuê ngay</button>
+                    <button class="btn" id="btn-rent-submit">Thuê ngay</button>
                     <!-- Các mức giá 1 ngày, 3 ngày, 7 ngày -->
                     <div class="price-options">
                         <div class="option"> 1 ngày <span>199.000 đ</span>
@@ -302,6 +302,10 @@
                     e.classList.add("selected")
                 }
             });
+        });
+
+        document.querySelector("#btn-rent-submit").addEventListener("click", (e) => {
+            window.location.href = "/rent-result.html"
         });
     </script>
 </body>
