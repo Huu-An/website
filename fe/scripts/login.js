@@ -32,7 +32,7 @@ btns.forEach(btn => {
       } else if (btn.id == "btn-fb-login") {
         alert("Tính năng đang được bảo trì!");
       } else {
-        alert("Tính năng đang được bảo trì!");
+        window.location.href = "/login-email.html";
       }
     }
   })
