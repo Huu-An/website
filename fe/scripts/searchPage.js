@@ -95,16 +95,14 @@ const getProducts = async (searchText, sortBy, order) => {
   if (data.data.length != 0) {
     data.data.forEach((product) => {
       const id = product.id;
-      const imgURL = product.images[0];
+      const imgURL =  "http://157.66.81.167" + product.images[0];
       const rentPrice = product.rent_price[0].price;
       const formattedRentPrice = Intl.NumberFormat();
       const name = product.title;
       const template = `
-        <div class="card card-custom border border-0 px-0 mt-1" style="max-width: 400px;" onclick=goToProduct(${id}); onclick="findProduct(1)">
+        <div class="card card-custom border border-0 px-0 mt-1" style="max-width: 400px;" onclick=goToProduct(${id}); onclick="findProduct(${product.id})">
               <div class="row-fluid d-flex justify-content-center img-card">
-                <img
-                  src="https://s3-alpha-sig.figma.com/img/ad7b/c365/6c4f0e652bf823a17c9a06c674b2bccb?Expires=1741564800&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=l8fUt~e3yzsDRdvDzoLg-ZMgeEFThrS6ACxr-toyGCEZvD4F4nMD3EXQxNWjaQcIMqYi6llJlppDO~YWl6b2dmVS7A~mYusUfc0WeD3t0bz8-Thji2YkQXG8E~d0Af1a60SjCdjJx8v7FYdoTtRXKNFHG8b9ZfSRThA1kKCM02uunQJDZfDxU3XQHzPmjNgm4pweScDolmsupja0IN~2Du~TGh-jhrEI2OmR0LzBWoLCh6Pz742C8QbFtKWKcZgpIK6EwPaZlaG~150R5AGAKmELpY0O30bXBNLhXzrlB8D-dWAi~YCWlEuKuQTxHGa-1t82~cN0GmaRwQaUBN1lcw__"
-                  class="card-img-top" alt="iPhone 15 Pro" style="width: 100%; height: auto;">
+                <img src="${imgURL}" class="card-img-top" alt="${product.title}" style="width: 100%; height: auto;">
                 <div class="image-overlay">
                   <span class="heart-icon">
                     <i class="fa fa-heart" aria-hidden="true" style="color: #FF7264;"></i>

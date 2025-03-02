@@ -489,6 +489,7 @@
     };
 
     checkAuthen();
+    const uploadedFiles = {};
 
     document.querySelectorAll('.image-item').forEach(item => {
       item.addEventListener('click', function () {
@@ -522,6 +523,14 @@
       const diaChi = document.querySelector("input[name=delivery]");
       const dieuKhoanHuy = document.querySelector("select[name=cancellation]");
       const giaTri = document.querySelector("input[name=product_value]");
+      
+      // Thu thập các ảnh đã upload (chỉ lấy những ảnh có src dạng base64)
+      let imagesArray = [];
+      document.querySelectorAll(".image-item img").forEach(img => {
+        if (img.src && img.src.startsWith("data:image/")) {
+          imagesArray.push(img.src);
+        }
+      });
 
       const danhMucSelected = danhMuc.options[danhMuc.selectedIndex].text;
       const tieuDeSelected = tieuDe.value;
@@ -532,7 +541,7 @@
       const diaChiSelected = diaChi.value;
       const dieuKhoanHuySelected = dieuKhoanHuy.selectedIndex;
       const giaTriValue = giaTri.value;
-
+      console.log(imagesArray);
       if (danhMuc.selectedIndex == 0 || tieuDe.value == "" || moTa.value == "" ||
         gia1.value == "" || gia3.value == "" || gia7.value == "" || diaChi.value == "" ||
         dieuKhoanHuy.selectedIndex == 0 || giaTri.value == "") {
@@ -542,9 +551,7 @@
           "category": danhMucSelected,
           "title": tieuDeSelected,
           "description": moTaSelected,
-          "images": [
-            "string"
-          ],
+          "images": imagesArray,
           "video": [
             "string"
           ],
