@@ -161,3 +161,20 @@ btnSearch.addEventListener("click", (e) => {
 const goToProduct = (id) => {
   window.location.href = `/view-product.html?id=${id}`;
 };
+
+
+
+document.querySelector("#btn-rent").addEventListener("click", () => {
+  window.location.href = "/import.html";
+});
+
+
+document.querySelector("#btn-user-info").addEventListener("click", () => {
+  window.location.href = "/info.html";
+});
+document.querySelector("#btn-cart").addEventListener("click", () => {
+  window.location.href = "/cart.html";
+});
+document.querySelector("#menu-history").addEventListener("click", () => {
+  window.location.href = "/history.html";
+});

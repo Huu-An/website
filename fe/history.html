@@ -125,7 +125,7 @@
 
 
     <div class="container">
-        <h1 class="cart-header">Giỏ hàng của tôi</h1>
+        <h1 class="cart-header">Lịch sử mua hàng</h1>
         <!-- Table hiển thị giỏ hàng -->
         <table class="table align-middle">
             <thead>
@@ -133,6 +133,7 @@
                     <th>Sản phẩm</th>
                     <th>Số ngày thuê</th>
                     <th>Đơn giá</th>
+                    <th>Trạng thái</th>
                     <th></th>
                 </tr>
             </thead>
@@ -141,69 +142,8 @@
             </tbody>
         </table>
         <!-- Phần thanh toán & áp mã khuyến mãi -->
-        <div class="row mt-4">
-            <!-- Cột bên trái: Phí vận chuyển, Mã giảm giá, Thông tin khuyến mãi -->
-            <div class="col-md-6 mb-3" style="margin-top: 200px;">
-                <div class="border p-3">
-                    <h5>Phí vận chuyển</h5>
-                    <div class="d-flex align-items-center mb-3">
-                        <label class="me-2">Phí vận chuyển:</label>
-                        <input type="text" class="form-control" id="shippingFee" value="15.000" style="width: 100px;"
-                            readonly>
-                    </div>
-                    <hr>
-                    <h5 style="margin-top: 10px;">Mã khuyến mãi</h5>
-                    <div class="input-group mb-2" style="max-width: auto;">
-                        <input type="text" class="form-control" placeholder="Nhập mã" id="promoCodeInput">
-                        <button class="btn btn-primary" id="applyPromoBtn">Áp mã</button>
-                    </div>
-                    <!-- Thông tin gợi ý khuyến mãi -->
-                    <h5 style="margin-top: 30px;">Danh sách mã hiện có</h5>
-                    <div class="border p-2" style="font-size: 14px;">
-                        <p class="mb-1">FREESHIP - Giảm 15k cho đơn 0đ</p>
-                        <p class="mb-1">FREESHIP200- Giảm 30k cho đơn từ nhiều 200k</p>
-                        <p class="mb-1">FREESHIP500- Miễn phí ship cho đơn 500k</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Cột bên phải: Tóm tắt đơn hàng (Tạm tính, Phí vận chuyển, Tổng cộng) -->
-            <div class="col-md-6 mb-3" style="margin-top: 200px;">
-                <div class="border p-3" style="max-width: 450px; margin-left: auto;">
-                    <h5>Tổng cộng</h5>
-                    <div class="d-flex justify-content-between mb-2">
-                        <span>Tạm tính</span>
-                        <strong id="subtotalText">484.000</strong>
-                    </div>
-                    <div class="d-flex justify-content-between mb-2">
-                        <span>Phí vận chuyển</span>
-                        <strong id="shippingFeeText">0</strong>
-                    </div>
-                    <div class="d-flex justify-content-between mb-2">
-                        <span>Giảm giá</span>
-                        <strong id="discountShip">0</strong>
-                    </div>
-                    <hr>
-                    <div class="d-flex justify-content-between mb-3">
-                        <span>Tổng cộng</span>
-                        <strong id="totalText">484.000</strong>
-                    </div>
-                    <div class="d-flex justify-content-between">
-                        <button class="btn btn-primary" id="payNowBtn" >Thanh toán ngay</button>
-                        <button class="btn btn-secondary" id="cancelBtn">Hủy Bỏ</button>
-                    </div>
-                </div>
-            </div>
-        </div>
+ 
     </div>
-
-
-
-
-
-
-
-
 
     <footer id="footer" class="row text-white column-gap-3 w-100 mx-0" style="padding: 5% 12% 12% 5%;">
         <div class="col">
@@ -275,37 +215,6 @@
             return "";
         }
 
-        // Hàm xóa 1 item khỏi giỏ hàng
-        async function removeItem(cartItemId) {
-            if (!confirm("Bạn có chắc muốn xóa sản phẩm này khỏi giỏ hàng?")) {
-                return;
-            }
-            const token = getTokenFromCookie();
-            if (!token) {
-                alert("Bạn chưa đăng nhập!");
-                return;
-            }
-            try {
-                const response = await fetch(`http://157.66.81.167:8000/cart/delete?id=${cartItemId}`, {
-                    method: "DELETE",
-                    headers: {
-                        "accept": "application/json",
-                        "Authorization": "Bearer " + token
-                    }
-                });
-                const data = await response.json();
-                console.log("Delete response:", data);
-                if (data.code === 200) {
-                    alert("Xóa sản phẩm khỏi giỏ hàng thành công!");
-                    loadCart(); // Tải lại giỏ hàng sau khi xóa
-                } else {
-                    alert("Không xóa được sản phẩm: " + (data.message || "Lỗi không xác định"));
-                }
-            } catch (error) {
-                console.error("Lỗi khi xóa sản phẩm:", error);
-                alert("Có lỗi xảy ra, vui lòng thử lại sau.");
-            }
-        }
 
         // Hàm load giỏ hàng
         async function loadCart() {
@@ -315,7 +224,7 @@
                 return;
             }
             try {
-                const response = await fetch("http://157.66.81.167:8000/cart/list?is_paid=1", {
+                const response = await fetch("http://157.66.81.167:8000/cart/list?is_paid=2", {
                     method: "GET",
                     headers: {
                         "accept": "application/json",
@@ -351,16 +260,12 @@
                 </div>
               </td>
               <td>
-                <select class="form-select days-select"
-                        data-item-id="${item.id}"
-                        data-rentprice='${JSON.stringify(item.rent_price)}'
-                        onchange="onDaysChange(event)">
-                  ${generateDayOptions(item.days)}
-                </select>
+            
+                <span>${item.days}</span>
               </td>
               <td id="priceCell-${item.id}">${priceFormatted}₫</td>
               <td>
-                <i class="fa fa-trash-o delete-icon" aria-hidden="true" onclick="removeItem(${item.id})"></i>
+               <span>Đã thanh toán</span>
               </td>
             </tr>
           `;
@@ -376,153 +281,23 @@
             return options;
         }
 
-        // Hàm xử lý khi thay đổi số ngày thuê
-        function onDaysChange(event) {
-            const selectEl = event.target;
-            const days = parseInt(selectEl.value, 10);
-            const itemId = selectEl.dataset.itemId;
-            const rentPriceJson = selectEl.dataset.rentprice;
-            const rentPriceArray = JSON.parse(rentPriceJson);
-
-            let chosenPrice = 0;
-            if (days >= 7) {
-                chosenPrice = getRentPriceValue(rentPriceArray, "for_7_days");
-            } else if (days >= 3) {
-                chosenPrice = getRentPriceValue(rentPriceArray, "for_3_days");
-            } else {
-                chosenPrice = getRentPriceValue(rentPriceArray, "for_1_days");
-            }
-
-            const priceCell = document.getElementById(`priceCell-${itemId}`);
-            if (priceCell) {
-                priceCell.textContent = parseInt(chosenPrice, 10).toLocaleString('vi-VN') + " ₫";
-            }
-            // Sau khi cập nhật đơn giá cho hàng, cập nhật lại tổng giá
-            updateTotals();
-        }
-
-        // Hàm tiện ích: Lấy giá theo key (for_1_days, for_3_days, for_7_days)
-        function getRentPriceValue(rentPriceArray, timeKey) {
-            const obj = rentPriceArray.find(rp => rp.time === timeKey);
-            return obj ? obj.price : 0;
-        }
-
-        // Các biến toàn cục cho tổng giá trị
-        let discountValue = 0;
-        let shippingFee = 15000; // Phí ship mặc định
-        let subtotal = 0;
-        let total = 0;
-
-        // Hàm cập nhật tổng giá trị
-        function updateTotals() {
-            // Lấy tất cả các ô đơn giá với id bắt đầu bằng "priceCell-"
-            const priceCells = document.querySelectorAll('[id^="priceCell-"]');
-            subtotal = 0;
-            priceCells.forEach(cell => {
-                // Lấy textContent và loại bỏ các ký tự không phải số
-                let priceStr = cell.textContent;
-                let priceNum = parseInt(priceStr.replace(/[^\d]/g, ''), 10);
-                if (!isNaN(priceNum)) {
-                    subtotal += priceNum;
-                }
-            });
-
-            // Lấy mã khuyến mãi từ input
-            const promoInput = document.getElementById("promoCodeInput");
-            let promoCode = promoInput ? promoInput.value.trim() : "";
-
-            // Reset discount và phí ship
-            discountValue = 0;
-            shippingFee = 15000;
-
-            // Áp dụng các điều kiện giảm giá:
-            // FREESHIP: giảm 15k, FREESHIP200: giảm 30k nếu subtotal ≥ 200k, FREESHIP500: miễn phí ship nếu subtotal ≥ 500k
-            if (promoCode === "FREESHIP500" && subtotal >= 500000) {
-                shippingFee = 0;
-            } else if (promoCode === "FREESHIP200" && subtotal >= 200000) {
-                discountValue = 30000;
-            } else if (promoCode === "FREESHIP") {
-                discountValue = 15000;
-            }
-
-            total = subtotal + shippingFee - discountValue;
-
-            // Cập nhật giao diện
-            document.getElementById("subtotalText").textContent = subtotal.toLocaleString('vi-VN');
-            document.getElementById("shippingFeeText").textContent = shippingFee.toLocaleString('vi-VN');
-            document.getElementById("discountShip").textContent = discountValue.toLocaleString('vi-VN');
-            document.getElementById("totalText").textContent = total.toLocaleString('vi-VN');
-            // 6. Thu thập thông tin từng sản phẩm và lưu vào localStorage
-            const cartBody = document.getElementById("cart-body");
-            const rowEls = cartBody.querySelectorAll("tr");
-            const cartStorageItems = [];
-
-            rowEls.forEach(row => {
-                // Lấy ảnh, tên, số ngày, đơn giá
-                const imgEl = row.querySelector("img.cart-product-image");
-                const titleEl = row.querySelector("td > div > span");
-                const selectEl = row.querySelector("select.days-select");
-                const priceCell = row.querySelector('[id^="priceCell-"]');
-
-                // Lấy tên, ảnh, số ngày thuê
-                const itemName = titleEl ? titleEl.textContent.trim() : "";
-                const itemImage = imgEl ? imgEl.src : "";
-                const itemDays = selectEl ? parseInt(selectEl.value, 10) : 1;
-
-                // Lấy đơn giá
-                let itemPrice = 0;
-                if (priceCell) {
-                    const cellPriceStr = priceCell.textContent.replace(/[^\d]/g, '');
-                    itemPrice = parseInt(cellPriceStr, 10) || 0;
-                }
-
-                cartStorageItems.push({
-                    name: itemName,
-                    image: itemImage,
-                    days: itemDays,
-                    price: itemPrice,
-                    id: selectEl.dataset.itemId
-                });
-            });
-
-            // 7. Tạo object chứa thông tin giỏ
-            const cartStorageData = {
-                items: cartStorageItems,
-                shippingFee,
-                discountValue,
-                total
-            };
-
-            // 8. Lưu vào localStorage
-            localStorage.setItem("cartData", JSON.stringify(cartStorageData));
-        }
-
-        // Gán sự kiện "input" cho ô mã khuyến mãi để cập nhật tổng ngay khi người dùng nhập
-        const promoCodeInput = document.getElementById("promoCodeInput");
-        if (promoCodeInput) {
-            promoCodeInput.addEventListener("input", updateTotals);
-        }
-
+   
         // Khi DOM load xong, load giỏ hàng và cập nhật tổng giá
         document.addEventListener("DOMContentLoaded", () => {
             loadCart();
         });
-        document.querySelector("#payNowBtn").addEventListener("click", () => {
-            window.location.href = "/payment.html";
-          });
-          document.querySelector("#btn-user-info").addEventListener("click", () => {
+        document.querySelector("#btn-user-info").addEventListener("click", () => {
             window.location.href = "/info.html";
-          });
-          document.querySelector("#btn-cart").addEventListener("click", () => {
-            window.location.href = "/cart.html";
           });
           document.querySelector("#btn-rent").addEventListener("click", () => {
             window.location.href = "/import.html";
           });
+          document.querySelector("#btn-cart").addEventListener("click", () => {
+            window.location.href = "/cart.html";
+          });
           document.querySelector("#menu-history").addEventListener("click", () => {
             window.location.href = "/history.html";
           });
-        // Ngoài ra, nếu có thao tác khác thay đổi giỏ hàng, hãy gọi updateTotals() sau đó.
     </script>
 
 
