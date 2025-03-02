@@ -212,7 +212,7 @@
                         <p>Tổng tiền: <span id="total-price">0</span> đ</p>
                     </div>
                     <!-- Nút Thuê ngay -->
-                    <button class="btn" id="btn-rent-submit">Thuê ngay</button>
+                    <button class="btn" id="btn-rent-submit">Thêm vào giỏ hàng</button>
                     <!-- Các mức giá 1 ngày, 3 ngày, 7 ngày -->
                     <div class="price-options">
                         <div class="option" > 1 ngày <span id="for_1_days_id">199.000 đ</span>
@@ -403,14 +403,119 @@
                 updateBookingInfo(); // Tính toán lại tổng số ngày và tổng tiền
             });
         });
-        // Nút "Thuê ngay" (chuyển sang trang khác)
-        document.querySelector("#btn-rent-submit").addEventListener("click", (e) => {
-            // Thực tế bạn có thể muốn gửi dữ liệu lên server, hoặc localStorage
-            // Ở đây chỉ demo chuyển trang
-            window.location.href = "/rent-result.html";
-        });
+       
     </script>
+    <script>
+        // Hàm lấy token từ cookie (giả sử token lưu dưới dạng "access_token=...")
+  function getTokenFromCookie() {
+    const cookieString = document.cookie;
+    const cookies = cookieString.split(';').map(c => c.trim());
+    for (let c of cookies) {
+      if (c.startsWith("access_token=")) {
+        return c.substring("access_token=".length, c.length);
+      }
+    }
+    return "";
+  }
 
+  // Hàm chuyển đổi nội dung span thành chuỗi số (loại bỏ các ký tự không phải số)
+  function getPriceString(id) {
+    const el = document.getElementById(id);
+    if (el) {
+      return el.innerText.replace(/[^\d]/g, ''); // loại bỏ dấu chấm, " đ", …
+    }
+    return "";
+  }
+
+  // Hàm gọi API tạo giỏ hàng
+  async function addToCart() {
+    // Lấy thông tin sản phẩm từ trang:
+    // - Tiêu đề sản phẩm từ .product-name h3
+    // - Ảnh sản phẩm từ .product-image img (đầu tiên)
+    // - Số ngày đã chọn từ id "days-selected"
+    // - Tổng tiền từ id "total-price" (loại bỏ ký tự không phải số nếu cần)
+    // - Các mức giá trong rent_price: lấy từ các span có id for_1_days_id, for_3_days_id, for_7_days_id
+
+    const titleEl = document.querySelector('.product-name h3');
+    const imageEl = document.querySelector('.product-image img');
+    const daysEl = document.getElementById("days-selected");
+    const totalPriceEl = document.getElementById("total-price");
+
+    if (!titleEl || !imageEl || !daysEl || !totalPriceEl) {
+      console.error("Không tìm thấy một số phần tử cần thiết trên trang.");
+      return;
+    }
+
+    const title = titleEl.textContent.trim();
+    const image = imageEl.src.trim();
+    const days = parseInt(daysEl.textContent.trim(), 10);
+    // Loại bỏ ký tự không phải số từ tổng tiền
+    const totalPrice = parseInt(totalPriceEl.textContent.replace(/[^\d]/g, ''), 10);
+
+    // Lấy giá cho các mốc: chuyển về chuỗi số
+    const price1 = getPriceString("for_1_days_id");
+    const price3 = getPriceString("for_3_days_id");
+    const price7 = getPriceString("for_7_days_id");
+
+    // Xây dựng payload theo mẫu API
+    const payload = {
+      title: title,
+      image: image, // Đường dẫn ảnh (có thể cần cắt bỏ host nếu API mong đợi đường dẫn tương đối)
+      days: days,
+      price: totalPrice,  // Tổng tiền tính theo số ngày (theo logic tính giá trên trang)
+      is_paid: 1,         // Giả sử 1 nếu đã thanh toán
+      rent_price: [
+        {
+          time: "for_1_days",
+          price: price1
+        },
+        {
+          time: "for_3_days",
+          price: price3
+        },
+        {
+          time: "for_7_days",
+          price: price7
+        }
+      ]
+    };
+
+    // Lấy token từ cookie
+    const token = getTokenFromCookie();
+    if (!token) {
+      alert("Bạn chưa đăng nhập. Vui lòng đăng nhập trước.");
+      return;
+    }
+
+    try {
+      const response = await fetch("http://157.66.81.167:8000/cart/create", {
+        method: "POST",
+        headers: {
+          "accept": "application/json",
+          "Content-Type": "application/json",
+          "Authorization": "Bearer " + token
+        },
+        body: JSON.stringify(payload)
+      });
+      const data = await response.json();
+      console.log("Response from cart API:", data);
+      if (data.code === 200) {
+        alert("Thêm sản phẩm vào giỏ hàng thành công!");
+        // Bạn có thể chuyển hướng hoặc cập nhật giao diện giỏ hàng ở đây
+      } else {
+        alert("Thêm sản phẩm vào giỏ hàng không thành công: " + (data.message || ""));
+      }
+    } catch (error) {
+      console.error("Lỗi khi thêm sản phẩm vào giỏ:", error);
+      alert("Có lỗi xảy ra, vui lòng thử lại sau.");
+    }
+  }
+
+  // Gán sự kiện click cho nút "Thêm vào giỏ hàng"
+  document.getElementById("btn-rent-submit").addEventListener("click", (e) => {
+    addToCart();
+  });
+    </script>
 </body>
 
 </html>

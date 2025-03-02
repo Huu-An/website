@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Cập nhật thông tin</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="./styles/index-style.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+    <style>
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px;
+        }
+
+        .cart-header {
+            margin-bottom: 30px;
+        }
+
+        /* Ảnh sản phẩm trong giỏ hàng */
+        .cart-product-image {
+            width: 80px;
+            height: auto;
+            margin-right: 10px;
+        }
+
+        /* Icon xóa */
+        .delete-icon {
+            cursor: pointer;
+            color: #333;
+            font-size: 1.3em;
+        }
+
+        /* Tùy chỉnh select số ngày thuê */
+        .days-select {
+            width: 70px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container-fluid">
+        <div id="header" class="row p-3">
+            <div class="col-1 px-3 mx-auto mt-3">
+                <a href="/"><img src="./images/white-logo.png" alt="logo" id="logo"
+                        style="width: 60px; height: 60px;"></a>
+            </div>
+            <div id="search" class="col-7 d-flex-column justify-content-center">
+                <div id="search-product" class="w-100">
+                    <div class="mt-3 row rounded rounded-5" id="in-search">
+                        <div class="input-group flex-nowrap" style="padding: 5px 10px;">
+                            <span class="input-group-text" id="addon-wrapping"
+                                style="background-color: white !important; border: none;"><i
+                                    class="fa fa-search"></i></span>
+                            <input type="text" class="form-control" style="border: none !important; width: 87%;"
+                                placeholder="Bạn đang tìm kiếm sản phẩm gì?" aria-label="search-input"
+                                aria-describedby="addon-wrapping" id="input-search">
+                            <button class="btn text-white rounded rounded-5" style="font-size: 15px;" type="button"
+                                id="btn-search">Tìm kiếm</button>
+                        </div>
+                    </div>
+                    <div class="row text-white text-center mt-1 mb-3">
+                        <div class="dropdown col">
+                            <span class="align-middle"><i class="fa fa-location-arrow" aria-hidden="true"></i> Gần
+                            </span>
+                            <div class="btn-group">
+                                <button class="btn btn-sm dropdown-toggle text-white fw-bold" style="font-size: 16px;"
+                                    type="button" id="locationSelect" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Mỹ Thạnh, Thủ Đức </button>
+                                <ul class="dropdown-menu w-100">
+                                    <li><a class="dropdown-item" href="#">Bình Dương</a></li>
+                                    <li><a class="dropdown-item" href="#">Bình Dương</a></li>
+                                    <li><a class="dropdown-item" href="#">Bình Dương</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="dropdown col">
+                            <span class="align-middle"><i class="fa fa-calendar" aria-hidden="true"></i> Thời gian thuê
+                            </span>
+                            <div class="btn-group">
+                                <button class="btn btn-sm dropdown-toggle text-white fw-bold" style="font-size: 16px;"
+                                    type="button" id="rentalDate" data-bs-toggle="dropdown" aria-expanded="false"> 26
+                                    thg 10, 2024 - 2 thg 11, 2024
+                                </button>
+                                <ul class="dropdown-menu w-100">
+                                    <li><a class="dropdown-item" href="#">Bình Dương</a></li>
+                                    <li><a class="dropdown-item" href="#">Bình Dương</a></li>
+                                    <li><a class="dropdown-item" href="#">Bình Dương</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="w-100 d-flex justify-content-center mt-3 pt-1">
+                    <button class="btn text-white rounded rounded-5 px-3 pt-1 pb-1" id="btn-rent">Cho thuê sản
+                        phẩm</button>
+                    <button class="btn">
+                        <img src="./images/lang-vn.jpg" alt="" style="width: 25px; height: 25px;"
+                            class="rounded rounded-circle">
+                        <span class="text-white">VN</span>
+                    </button>
+                    <button class="btn" id="btn-user-info">
+                        <i class="fa fa-user-circle text-white" aria-hidden="true" style="font-size: 1.3em;"></i>
+                    </button>
+                    <button class="btn" id="btn-cart">
+                        <i class="fa fa-shopping-cart text-white" aria-hidden="true" style="font-size: 1.3em;"></i>
+                    </button>
+                    <button class="btn">
+                        <i class="fa fa-bars text-white" aria-hidden="true" style="font-size: 1.3em;"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="container">
+        <h1 class="cart-header">Giỏ hàng của tôi</h1>
+        <!-- Table hiển thị giỏ hàng -->
+        <table class="table align-middle">
+            <thead>
+                <tr>
+                    <th>Sản phẩm</th>
+                    <th>Số ngày thuê</th>
+                    <th>Đơn giá</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody id="cart-body">
+                <!-- Các dòng sản phẩm sẽ được thêm động -->
+            </tbody>
+        </table>
+        <!-- Phần thanh toán & áp mã khuyến mãi -->
+        <div class="row mt-4">
+            <!-- Cột bên trái: Phí vận chuyển, Mã giảm giá, Thông tin khuyến mãi -->
+            <div class="col-md-6 mb-3" style="margin-top: 200px;">
+                <div class="border p-3">
+                    <h5>Phí vận chuyển</h5>
+                    <div class="d-flex align-items-center mb-3">
+                        <label class="me-2">Phí vận chuyển:</label>
+                        <input type="text" class="form-control" id="shippingFee" value="15.000" style="width: 100px;"
+                            readonly>
+                    </div>
+                    <hr>
+                    <h5 style="margin-top: 10px;">Mã khuyến mãi</h5>
+                    <div class="input-group mb-2" style="max-width: auto;">
+                        <input type="text" class="form-control" placeholder="Nhập mã" id="promoCodeInput">
+                        <button class="btn btn-primary" id="applyPromoBtn">Áp mã</button>
+                    </div>
+                    <!-- Thông tin gợi ý khuyến mãi -->
+                    <h5 style="margin-top: 30px;">Danh sách mã hiện có</h5>
+                    <div class="border p-2" style="font-size: 14px;">
+                        <p class="mb-1">FREESHIP - Giảm 15k cho đơn 0đ</p>
+                        <p class="mb-1">FREESHIP200- Giảm 30k cho đơn từ nhiều 200k</p>
+                        <p class="mb-1">FREESHIP500- Miễn phí ship cho đơn 500k</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Cột bên phải: Tóm tắt đơn hàng (Tạm tính, Phí vận chuyển, Tổng cộng) -->
+            <div class="col-md-6 mb-3" style="margin-top: 200px;">
+                <div class="border p-3" style="max-width: 450px; margin-left: auto;">
+                    <h5>Tổng cộng</h5>
+                    <div class="d-flex justify-content-between mb-2">
+                        <span>Tạm tính</span>
+                        <strong id="subtotalText">484.000</strong>
+                    </div>
+                    <div class="d-flex justify-content-between mb-2">
+                        <span>Phí vận chuyển</span>
+                        <strong id="shippingFeeText">0</strong>
+                    </div>
+                    <div class="d-flex justify-content-between mb-2">
+                        <span>Giảm giá</span>
+                        <strong id="discountShip">0</strong>
+                    </div>
+                    <hr>
+                    <div class="d-flex justify-content-between mb-3">
+                        <span>Tổng cộng</span>
+                        <strong id="totalText">484.000</strong>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <button class="btn btn-primary" id="payNowBtn">Thanh toán ngay</button>
+                        <button class="btn btn-secondary" id="cancelBtn">Hủy Bỏ</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+    <footer id="footer" class="row text-white column-gap-3 w-100 mx-0" style="padding: 5% 12% 12% 5%;">
+        <div class="col">
+            <h5 class="mb-3">Giới thiệu TER</h5>
+            <p class="mt-3 mb-3">Thuê Nhanh - thuê gì cũng có. Hệ thống cho thuê đồ công nghệ độc đáo hàng đầu Việt Nam
+            </p>
+            <img src="./images/bct.png" class="mt-3" id="img-bct">
+        </div>
+        <div class="col">
+            <h5 class="mb-3">Liên kết</h5>
+            <div class="mt-3">
+                <a href="/" style="text-decoration: none;" class="text-white">- Giới thiệu</a> </br>
+                <a href="/" style="text-decoration: none;" class="text-white">- Liên hệ</a> </br>
+                <a href="/" style="text-decoration: none;" class="text-white">- Tin tức</a> </br>
+                <a href="/" style="text-decoration: none;" class="text-white">- Hướng dẫn sử dụng</a> </br>
+                <a href="/" style="text-decoration: none;" class="text-white">- Điều khoản sử dụng</a> </br>
+                <a href="/" style="text-decoration: none;" class="text-white">- Qui trình thuê</a> </br>
+                <a href="/" style="text-decoration: none;" class="text-white">- Đặt cọc</a> </br>
+                <a href="/" style="text-decoration: none;" class="text-white">- Lợi ích của việc thuê với mua</a> </br>
+            </div>
+        </div>
+        <div class="col">
+            <h5 class="mb-3">Thông tin liên hệ</h5>
+            <div class="row">
+                <table>
+                    <tr>
+                        <td class="px-3" style="font-size: 1.3em;"><i class="fa fa-map-marker" aria-hidden="true"></i>
+                        </td>
+                        <td>
+                            <p class="mb-0">Lô E2a-7, Đường D1, Đ. D1, Long Thạnh Mỹ, Thành Phố Thủ Đức, Hồ Chí Minh</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="px-3" style="font-size: 1.3em;"><i class="fa fa-phone" aria-hidden="true"></i></td>
+                        <td>
+                            <a class="mb-0 text-white" href="tel:+84 0912345678"
+                                style="text-decoration: none;">0912345678</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="px-3" style="font-size: 1.3em;"><i class="fa fa-envelope" aria-hidden="true"></i>
+                        </td>
+                        <td>
+                            <a class="mb-0 text-white" href="mailto:ter@gmail.com"
+                                style="text-decoration: none;">ter@gmail.com</a>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="col">
+            <h5 class="mb-3">Fanpage</h5>
+            <div>
+                <a href="" style="text-decoration: none;" class="text-white display-6"><i
+                        class="fa fa-facebook-official" aria-hidden="true"></i></a>
+            </div>
+        </div>
+    </footer>
+    <script>
+        // Hàm lấy token (giả sử lưu trong cookie "access_token=...")
+        function getTokenFromCookie() {
+          const cookieString = document.cookie;
+          const cookies = cookieString.split(';').map(c => c.trim());
+          for (let c of cookies) {
+            if (c.startsWith("access_token=")) {
+              return c.substring("access_token=".length);
+            }
+          }
+          return "";
+        }
+      
+        // Hàm xóa 1 item khỏi giỏ hàng
+        async function removeItem(cartItemId) {
+          if (!confirm("Bạn có chắc muốn xóa sản phẩm này khỏi giỏ hàng?")) {
+            return;
+          }
+          const token = getTokenFromCookie();
+          if (!token) {
+            alert("Bạn chưa đăng nhập!");
+            return;
+          }
+          try {
+            const response = await fetch(`http://157.66.81.167:8000/cart/delete?id=${cartItemId}`, {
+              method: "DELETE",
+              headers: {
+                "accept": "application/json",
+                "Authorization": "Bearer " + token
+              }
+            });
+            const data = await response.json();
+            console.log("Delete response:", data);
+            if (data.code === 200) {
+              alert("Xóa sản phẩm khỏi giỏ hàng thành công!");
+              loadCart(); // Tải lại giỏ hàng sau khi xóa
+            } else {
+              alert("Không xóa được sản phẩm: " + (data.message || "Lỗi không xác định"));
+            }
+          } catch (error) {
+            console.error("Lỗi khi xóa sản phẩm:", error);
+            alert("Có lỗi xảy ra, vui lòng thử lại sau.");
+          }
+        }
+      
+        // Hàm load giỏ hàng
+        async function loadCart() {
+          const token = getTokenFromCookie();
+          if (!token) {
+            alert("Bạn chưa đăng nhập!");
+            return;
+          }
+          try {
+            const response = await fetch("http://157.66.81.167:8000/cart/list?is_paid=1", {
+              method: "GET",
+              headers: {
+                "accept": "application/json",
+                "Authorization": "Bearer " + token
+              }
+            });
+            const result = await response.json();
+            if (result.code === 200 && Array.isArray(result.data)) {
+              const cartItems = result.data;
+              const cartBody = document.getElementById("cart-body");
+              cartBody.innerHTML = cartItems.map(generateCartRow).join("");
+              // Sau khi render xong, cập nhật tổng giá
+              updateTotals();
+              console.log("Price cells:", document.querySelectorAll('[id^="priceCell-"]'));
+            } else {
+              console.error("Không tìm thấy giỏ hàng hoặc API trả về lỗi:", result.message);
+            }
+          } catch (error) {
+            console.error("Lỗi khi gọi API giỏ hàng:", error);
+          }
+        }
+      
+        // Hàm tạo dòng HTML cho mỗi item
+        function generateCartRow(item) {
+          // Format giá (chuyển thành số và định dạng hiển thị)
+          const priceFormatted = parseInt(item.price, 10).toLocaleString('vi-VN');
+          return `
+            <tr>
+              <td>
+                <div class="d-flex align-items-center">
+                  <img src="${item.image}" alt="${item.title}" class="cart-product-image">
+                  <span>${item.title}</span>
+                </div>
+              </td>
+              <td>
+                <select class="form-select days-select"
+                        data-item-id="${item.id}"
+                        data-rentprice='${JSON.stringify(item.rent_price)}'
+                        onchange="onDaysChange(event)">
+                  ${generateDayOptions(item.days)}
+                </select>
+              </td>
+              <td id="priceCell-${item.id}">${priceFormatted}₫</td>
+              <td>
+                <i class="fa fa-trash-o delete-icon" aria-hidden="true" onclick="removeItem(${item.id})"></i>
+              </td>
+            </tr>
+          `;
+        }
+      
+        // Tạo option từ 1 đến 31 cho số ngày thuê
+        function generateDayOptions(selectedDays) {
+          let options = "";
+          for (let i = 1; i <= 31; i++) {
+            const val = i < 10 ? "0" + i : "" + i;
+            options += `<option value="${i}" ${i === selectedDays ? "selected" : ""}>${val}</option>`;
+          }
+          return options;
+        }
+      
+        // Hàm xử lý khi thay đổi số ngày thuê
+        function onDaysChange(event) {
+          const selectEl = event.target;
+          const days = parseInt(selectEl.value, 10);
+          const itemId = selectEl.dataset.itemId;
+          const rentPriceJson = selectEl.dataset.rentprice;
+          const rentPriceArray = JSON.parse(rentPriceJson);
+      
+          let chosenPrice = 0;
+          if (days >= 7) {
+            chosenPrice = getRentPriceValue(rentPriceArray, "for_7_days");
+          } else if (days >= 3) {
+            chosenPrice = getRentPriceValue(rentPriceArray, "for_3_days");
+          } else {
+            chosenPrice = getRentPriceValue(rentPriceArray, "for_1_days");
+          }
+      
+          const priceCell = document.getElementById(`priceCell-${itemId}`);
+          if (priceCell) {
+            priceCell.textContent = parseInt(chosenPrice, 10).toLocaleString('vi-VN') + " ₫";
+          }
+          // Sau khi cập nhật đơn giá cho hàng, cập nhật lại tổng giá
+          updateTotals();
+        }
+      
+        // Hàm tiện ích: Lấy giá theo key (for_1_days, for_3_days, for_7_days)
+        function getRentPriceValue(rentPriceArray, timeKey) {
+          const obj = rentPriceArray.find(rp => rp.time === timeKey);
+          return obj ? obj.price : 0;
+        }
+      
+        // Các biến toàn cục cho tổng giá trị
+        let discountValue = 0;
+        let shippingFee = 15000; // Phí ship mặc định
+        let subtotal = 0;
+        let total = 0;
+      
+        // Hàm cập nhật tổng giá trị
+        function updateTotals() {
+          // Lấy tất cả các ô đơn giá với id bắt đầu bằng "priceCell-"
+          const priceCells = document.querySelectorAll('[id^="priceCell-"]');
+          
+          subtotal = 0;
+          priceCells.forEach(cell => {
+            // Lấy textContent và loại bỏ các ký tự không phải số
+            let priceStr = cell.textContent;
+            let priceNum = parseInt(priceStr.replace(/[^\d]/g, ''), 10);
+            if (!isNaN(priceNum)) {
+              subtotal += priceNum;
+            }
+          });
+          
+          // Lấy mã khuyến mãi từ input
+          const promoInput = document.getElementById("promoCodeInput");
+          let promoCode = promoInput ? promoInput.value.trim() : "";
+          
+          // Reset discount và phí ship
+          discountValue = 0;
+          shippingFee = 15000;
+          
+          // Áp dụng các điều kiện giảm giá:
+          // FREESHIP: giảm 15k, FREESHIP200: giảm 30k nếu subtotal ≥ 200k, FREESHIP500: miễn phí ship nếu subtotal ≥ 500k
+          if (promoCode === "FREESHIP500" && subtotal >= 500000) {
+            shippingFee = 0;
+          } else if (promoCode === "FREESHIP200" && subtotal >= 200000) {
+            discountValue = 30000;
+          } else if (promoCode === "FREESHIP") {
+            discountValue = 15000;
+          }
+          
+          total = subtotal + shippingFee - discountValue;
+          
+          // Cập nhật giao diện
+          document.getElementById("subtotalText").textContent = subtotal.toLocaleString('vi-VN');
+          document.getElementById("shippingFeeText").textContent = shippingFee.toLocaleString('vi-VN');
+          document.getElementById("totalText").textContent = total.toLocaleString('vi-VN');
+        }
+      
+        // Gán sự kiện "input" cho ô mã khuyến mãi để cập nhật tổng ngay khi người dùng nhập
+        const promoCodeInput = document.getElementById("promoCodeInput");
+        if (promoCodeInput) {
+          promoCodeInput.addEventListener("input", updateTotals);
+        }
+      
+        // Khi DOM load xong, load giỏ hàng và cập nhật tổng giá
+        document.addEventListener("DOMContentLoaded", () => {
+          loadCart();
+        });
+        
+        // Ngoài ra, nếu có thao tác khác thay đổi giỏ hàng, hãy gọi updateTotals() sau đó.
+      </script>
+      
+
+</body>
+
+</html>

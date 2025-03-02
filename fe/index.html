@@ -239,27 +239,27 @@
       let imageUrl = "http://157.66.81.167" + product.images[0];
 
       return `
-    <div class="card card-custom border border-0 px-0" style="max-width: 400px;" onclick="findProduct(${product.id})">
-      <div class="row-fluid d-flex justify-content-center img-card">
-        <img src="${imageUrl}" class="card-img-top" alt="${product.title}" style="width: 100%; height: auto;">
-        <div class="image-overlay">
-          <span class="heart-icon">
-            <i class="fa fa-heart" aria-hidden="true" style="color: #FF7264;"></i>
-          </span>
-          <i class="fa fa-bookmark-o bookmark-icon" style="font-size: 25px; font-weight: 800;" aria-hidden="true"></i>
+        <div class="card card-custom border border-0 px-0" style="max-width: 400px;" onclick="findProduct(${product.id})">
+          <div class="row-fluid d-flex justify-content-center img-card">
+            <img src="${imageUrl}" class="card-img-top" alt="${product.title}" style="width: 100%; height: auto;">
+            <div class="image-overlay">
+              <span class="heart-icon">
+                <i class="fa fa-heart" aria-hidden="true" style="color: #FF7264;"></i>
+              </span>
+              <i class="fa fa-bookmark-o bookmark-icon" style="font-size: 25px; font-weight: 800;" aria-hidden="true"></i>
+            </div>
+          </div>
+          <div class="card-body p-1 mt-1">
+            <h6 class="card-title">${product.title}</h6>
+            <p class="price" style="color: #0345E4;">${priceText}₫/day</p>
+          </div>
         </div>
-      </div>
-      <div class="card-body p-1 mt-1">
-        <h6 class="card-title">${product.title}</h6>
-        <p class="price" style="color: #0345E4;">${priceText}₫/day</p>
-      </div>
-    </div>
-  `;
+      `;
     }
 
     // Hàm chuyển đến trang chi tiết sản phẩm
     function findProduct(productId) {
-      window.location.href = "/product-detail.html?id=" + productId;
+      window.location.href = "/view-product.html?id=" + productId;
     }
 
     // Gọi API lấy danh sách sản phẩm
@@ -275,7 +275,7 @@
           // Giả sử "Sản phẩm được thuê nhiều" lấy một nửa đầu danh sách,
           // và "Sản phẩm mới" lấy toàn bộ danh sách hoặc nửa sau.
           const products = data.data;
-          const popularProducts = products.slice(0, Math.ceil(products.length / 2));
+          const popularProducts = products
           const newProducts = products; // Hoặc products.slice(Math.ceil(products.length / 2))
 
           // Cập nhật nội dung cho phần "Sản phẩm được thuê nhiều"
@@ -295,6 +295,9 @@
       })
       .catch(error => {
         console.error("Fetch error:", error);
+      });
+      document.querySelector("#btn-rent").addEventListener("click", () => {
+        window.location.href = "/import.html";
       });
   </script>
 </body>
