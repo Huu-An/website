@@ -17,7 +17,6 @@
   <style>
     body {
       font-family: 'Quicksand', sans-serif;
-      margin: 20px;
       background: #f9f9f9;
     }
 
@@ -28,7 +27,6 @@
       padding: 30px 30px;
       margin-top: 60px;
       margin-bottom: 60px;
-
       border-radius: 8px;
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     }
@@ -73,30 +71,33 @@
                 id="btn-search">Tìm kiếm</button>
             </div>
           </div>
-          <div class="row text-white text-center mt-1 mb-3">
-            <div class="dropdown col">
+          <div class="row text-white text-center mt-1 mb-5">
+            <div class="dropdown col-5">
               <span class="align-middle"><i class="fa fa-location-arrow" aria-hidden="true"></i> Gần </span>
               <div class="btn-group">
-                <button class="btn btn-sm dropdown-toggle text-white fw-bold" style="font-size: 16px;" type="button"
-                  id="locationSelect" data-bs-toggle="dropdown" aria-expanded="false"> Mỹ Thạnh, Thủ Đức </button>
-                <ul class="dropdown-menu w-100">
-                  <li><a class="dropdown-item" href="#">Bình Dương</a></li>
-                  <li><a class="dropdown-item" href="#">Bình Dương</a></li>
-                  <li><a class="dropdown-item" href="#">Bình Dương</a></li>
-                </ul>
+                <select class="custom-select btn btn-sm dropdown-toggle text-white fw-bold" id="inputGroupSelect01"
+                  style="font-size: 16px;">
+                  <option value="0" selected>Mỹ Thạnh, Thủ Đức</option>
+                  <option value="1">Gò Công, Tiền Giang</option>
+                  <option value="2">Xuân Thủy, Quảng Bình</option>
+                  <option value="3">Đống Đa, Hà Nội</option>
+                  <option value="4">Hoàn Kiếm, Hà Nội</option>
+                  <option value="5">Quận 10, TP. HCM</option>
+                </select>
               </div>
             </div>
             <div class="dropdown col">
-              <span class="align-middle"><i class="fa fa-calendar" aria-hidden="true"></i> Thời gian thuê </span>
+              <span class="align-middle"><i class="fa fa-location-arrow" aria-hidden="true"></i> Thời gian thuê </span>
               <div class="btn-group">
-                <button class="btn btn-sm dropdown-toggle text-white fw-bold" style="font-size: 16px;" type="button"
-                  id="rentalDate" data-bs-toggle="dropdown" aria-expanded="false"> 26 thg 10, 2024 - 2 thg 11, 2024
-                </button>
-                <ul class="dropdown-menu w-100">
-                  <li><a class="dropdown-item" href="#">Bình Dương</a></li>
-                  <li><a class="dropdown-item" href="#">Bình Dương</a></li>
-                  <li><a class="dropdown-item" href="#">Bình Dương</a></li>
-                </ul>
+                <select class="custom-select btn btn-sm dropdown-toggle text-white fw-bold" id="inputGroupSelect01"
+                  style="font-size: 16px;">
+                  <option value="0" selected>26 thg 10, 2025 - 2 thg 11, 2025</option>
+                  <option value="1">3 thg 11, 2025 - 7 thg 11, 2025</option>
+                  <option value="2">8 th 11, 2025 - 15 th 11, 2025</option>
+                  <option value="3">16 th 11, 2025 - 23 th 11, 2025</option>
+                  <option value="4">24 th 11, 2025 - 31 th 11, 2025</option>
+                  <option value="5">1 th 12, 2025 - 7 th 12, 2025</option>
+                </select>
               </div>
             </div>
           </div>
@@ -124,10 +125,8 @@
   </div>
   <div class="container">
     <!-- Thanh chào phía trên (tùy ý) -->
-    <div class="text-end mb-3">
-      Xin chào! <span id="userNameSpan"></span>
+    <div class="text-end mb-3"> Xin chào! <span id="userNameSpan"></span>
     </div>
-
     <h2>Cập nhật thông tin</h2>
     <form id="updateForm">
       <div class="row">

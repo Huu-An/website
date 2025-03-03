@@ -89,34 +89,35 @@
                                 id="btn-search">Tìm kiếm</button>
                         </div>
                     </div>
-                    <div class="row text-white text-center mt-1 mb-3">
-                        <div class="dropdown col">
+                    <div class="row text-white text-center mt-1 mb-5">
+                        <div class="dropdown col-5">
                             <span class="align-middle"><i class="fa fa-location-arrow" aria-hidden="true"></i> Gần
                             </span>
                             <div class="btn-group">
-                                <button class="btn btn-sm dropdown-toggle text-white fw-bold" style="font-size: 16px;"
-                                    type="button" id="locationSelect" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Mỹ Thạnh, Thủ Đức </button>
-                                <ul class="dropdown-menu w-100">
-                                    <li><a class="dropdown-item" href="#">Bình Dương</a></li>
-                                    <li><a class="dropdown-item" href="#">Bình Dương</a></li>
-                                    <li><a class="dropdown-item" href="#">Bình Dương</a></li>
-                                </ul>
+                                <select class="custom-select btn btn-sm dropdown-toggle text-white fw-bold"
+                                    id="inputGroupSelect01" style="font-size: 16px;">
+                                    <option value="0" selected>Mỹ Thạnh, Thủ Đức</option>
+                                    <option value="1">Gò Công, Tiền Giang</option>
+                                    <option value="2">Xuân Thủy, Quảng Bình</option>
+                                    <option value="3">Đống Đa, Hà Nội</option>
+                                    <option value="4">Hoàn Kiếm, Hà Nội</option>
+                                    <option value="5">Quận 10, TP. HCM</option>
+                                </select>
                             </div>
                         </div>
                         <div class="dropdown col">
-                            <span class="align-middle"><i class="fa fa-calendar" aria-hidden="true"></i> Thời gian thuê
-                            </span>
+                            <span class="align-middle"><i class="fa fa-location-arrow" aria-hidden="true"></i> Thời gian
+                                thuê </span>
                             <div class="btn-group">
-                                <button class="btn btn-sm dropdown-toggle text-white fw-bold" style="font-size: 16px;"
-                                    type="button" id="rentalDate" data-bs-toggle="dropdown" aria-expanded="false"> 26
-                                    thg 10, 2024 - 2 thg 11, 2024
-                                </button>
-                                <ul class="dropdown-menu w-100">
-                                    <li><a class="dropdown-item" href="#">Bình Dương</a></li>
-                                    <li><a class="dropdown-item" href="#">Bình Dương</a></li>
-                                    <li><a class="dropdown-item" href="#">Bình Dương</a></li>
-                                </ul>
+                                <select class="custom-select btn btn-sm dropdown-toggle text-white fw-bold"
+                                    id="inputGroupSelect01" style="font-size: 16px;">
+                                    <option value="0" selected>26 thg 10, 2025 - 2 thg 11, 2025</option>
+                                    <option value="1">3 thg 11, 2025 - 7 thg 11, 2025</option>
+                                    <option value="2">8 th 11, 2025 - 15 th 11, 2025</option>
+                                    <option value="3">16 th 11, 2025 - 23 th 11, 2025</option>
+                                    <option value="4">24 th 11, 2025 - 31 th 11, 2025</option>
+                                    <option value="5">1 th 12, 2025 - 7 th 12, 2025</option>
+                                </select>
                             </div>
                         </div>
                     </div>
@@ -188,11 +189,9 @@
                     <!-- Checkbox lưu thông tin -->
                     <div class="form-check mb-3">
                         <input class="form-check-input" type="checkbox" id="saveInfoCheck">
-                        <label class="form-check-label" for="saveInfoCheck">
-                            Lưu thông tin này để thanh toán nhanh hơn lần sau
-                        </label>
+                        <label class="form-check-label" for="saveInfoCheck"> Lưu thông tin này để thanh toán nhanh hơn
+                            lần sau </label>
                     </div>
-
                 </form>
             </div>
             <!-- Cột phải: Hiển thị sản phẩm và tổng tiền -->
@@ -225,15 +224,11 @@
                 <div class="mb-2" style="margin-top: 30px">
                     <div class="form-check">
                         <input class="form-check-input" type="radio" name="paymentMethod" id="bankRadio" checked>
-                        <label class="form-check-label" for="bankRadio">
-                            Ngân hàng
-                        </label>
+                        <label class="form-check-label" for="bankRadio"> Ngân hàng </label>
                     </div>
                     <div class="form-check">
                         <input class="form-check-input" type="radio" name="paymentMethod" id="codRadio">
-                        <label class="form-check-label" for="codRadio">
-                            Tiền mặt
-                        </label>
+                        <label class="form-check-label" for="codRadio"> Tiền mặt </label>
                     </div>
                 </div>
                 <!-- QR Code -->
@@ -330,12 +325,12 @@
                 const productDiv = document.createElement("div");
                 productDiv.classList.add("product-item");
                 productDiv.innerHTML = `
-          <img src="${item.image}" alt="${item.name}">
-          <div>
-            <p class="mb-0">${item.name} (Thuê ${item.days} ngày)</p>
-            <strong>${item.price.toLocaleString('vi-VN')} đ</strong>
-          </div>
-        `;
+                    <img src="${item.image}" alt="${item.name}">
+                    <div>
+                        <p class="mb-0">${item.name} (Thuê ${item.days} ngày)</p>
+                        <strong>${item.price.toLocaleString('vi-VN')} đ</strong>
+                    </div>
+                `;
                 container.appendChild(productDiv);
             });
 
@@ -453,6 +448,7 @@
                 console.log("Update cart response:", result);
                 if (result.code === 200) {
                     alert("Cập nhật trạng thái giỏ hàng thành công!");
+                    window.location.href = "/rent-result.html";
                 } else {
                     alert("Không thể cập nhật giỏ hàng: " + (result.message || "Lỗi không xác định"));
                 }
@@ -465,18 +461,16 @@
         document.getElementById("payBtn").addEventListener("click", (e) => {
             e.preventDefault();
             updateCartStatus();
-            // Sau khi cập nhật trạng thái, bạn có thể chuyển hướng hoặc xử lý tiếp
-            window.location.href = "/rent-result.html";
         });
         document.querySelector("#btn-user-info").addEventListener("click", () => {
             window.location.href = "/info.html";
-          });
-          document.querySelector("#btn-cart").addEventListener("click", () => {
+        });
+        document.querySelector("#btn-cart").addEventListener("click", () => {
             window.location.href = "/cart.html";
-          });
-          document.querySelector("#menu-history").addEventListener("click", () => {
+        });
+        document.querySelector("#menu-history").addEventListener("click", () => {
             window.location.href = "/history.html";
-          });
+        });
     </script>
 </body>
 
