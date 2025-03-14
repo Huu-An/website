@@ -137,7 +137,7 @@
                 <!-- Mô tả sản phẩm -->
                 <div>
                     <h5>THÔNG TIN</h5>
-                    <div class="mt-5">
+                    <div class="product-includes mt-5">
                         <h6 style="color: gray;">Bao gồm</h6>
                         <p style="font-weight: bold; color: black;">Laptop ASUS TUF Gaming F15 FX507ZC4-HN095W </h6>
                     </div>
@@ -349,17 +349,13 @@
                         }
                         // Nếu bạn có thêm thông tin khác như mô tả, địa chỉ, ... bạn có thể cập nhật tương tự:
                         // Ví dụ: cập nhật mô tả sản phẩm vào phần "THÔNG TIN"
-                        const infoSection = document.querySelector('.product-section > div:nth-of-type(2)');
-                        if (infoSection) {
-                            // Ở đây bạn có thể tìm thẻ <p> nào cần thay đổi hoặc tạo mới nội dung
-                            // Ví dụ đơn giản: thêm mô tả vào đầu phần này
-                            const descriptionEl = document.createElement('p');
-                            descriptionEl.style.fontWeight = 'bold';
-                            descriptionEl.style.color = 'black';
-                            descriptionEl.textContent = product.description;
-                            // Chèn vào đầu phần thông tin
-                            infoSection.insertBefore(descriptionEl, infoSection.firstChild);
-                        }
+                        const infoSection = document.querySelector('.product-includes p');
+                       
+                        infoSection.textContent = product.description;
+                         
+                        
+                        // Cập nhật mô tả sản phẩm vào phần "THÔNG TIN"
+
                     } else {
                         console.error("Không tìm thấy sản phẩm hoặc API trả về lỗi:", data.message);
                     }
@@ -386,8 +382,16 @@
             // Áp dụng logic tính giá
             if (selectedDaysCount >= 7) {
                 totalPrice = PROMO_7_DAYS;
+                let remainingDays = selectedDaysCount - 7;
+                if (remainingDays >= 3) {
+                    totalPrice += PROMO_3_DAYS;
+                    remainingDays -= 3;
+                }
+                totalPrice += remainingDays * DAILY_PRICE;
             } else if (selectedDaysCount >= 3) {
                 totalPrice = PROMO_3_DAYS;
+                let remainingDays = selectedDaysCount - 3;
+                totalPrice += remainingDays * DAILY_PRICE;
             } else {
                 // 0, 1, 2 ngày => tính theo giá lẻ
                 totalPrice = selectedDaysCount * DAILY_PRICE;
@@ -397,12 +401,35 @@
             document.getElementById("days-selected").textContent = selectedDaysCount;
             document.getElementById("total-price").textContent = totalPrice.toLocaleString('vi-VN');
         }
-
         // Gán sự kiện click cho các ô ngày số (chỉ click được cho các phần tử có class .day-number)
         document.querySelectorAll(".calendar-grid .day-number").forEach(dayEl => {
             dayEl.addEventListener("click", () => {
-                dayEl.classList.toggle("selected"); // Thêm/bớt class 'selected'
-                updateBookingInfo(); // Tính toán lại tổng số ngày và tổng tiền
+            const selectedDays = Array.from(document.querySelectorAll(".calendar-grid .day-number.selected"))
+                .map(el => parseInt(el.textContent, 10))
+                .sort((a, b) => a - b);
+
+            const dayNumber = parseInt(dayEl.textContent, 10);
+
+            if (selectedDays.length > 0) {
+                const lastSelectedDay = selectedDays[selectedDays.length - 1];
+                const firstSelectedDay = selectedDays[0];
+                if (dayEl.classList.contains("selected")) {
+                    // Nếu bỏ chọn ngày đầu hoặc cuối thì không báo alert
+                    if (dayNumber !== firstSelectedDay && dayNumber !== lastSelectedDay) {
+                        alert("Nếu muốn thuê các ngày khác nhau bạn vui làm thêm vào giỏ hàng vào lần sau.");
+                        return;
+                    }
+                } else {
+                    // Nếu chọn ngày mới thì kiểm tra khoảng cách
+                    if (Math.abs(dayNumber - lastSelectedDay) !== 1 && Math.abs(dayNumber - firstSelectedDay) !== 1) {
+                        alert("Nếu muốn thuê các ngày khác nhau bạn vui làm thêm vào giỏ hàng vào lần sau.");
+                        return;
+                    }
+                }
+            }
+
+            dayEl.classList.toggle("selected"); // Thêm/bớt class 'selected'
+            updateBookingInfo(); // Tính toán lại tổng số ngày và tổng tiền
             });
         });
 
@@ -503,6 +530,12 @@
                 console.log("Response from cart API:", data);
                 if (data.code === 200) {
                     alert("Thêm sản phẩm vào giỏ hàng thành công!");
+                    // Clear selected days
+                    document.querySelectorAll(".calendar-grid .day-number.selected").forEach(dayEl => {
+                        dayEl.classList.remove("selected");
+                    });
+                    // Reset booking info
+                    updateBookingInfo();
                     // Bạn có thể chuyển hướng hoặc cập nhật giao diện giỏ hàng ở đây
                 } else {
                     alert("Thêm sản phẩm vào giỏ hàng không thành công: " + (data.message || ""));

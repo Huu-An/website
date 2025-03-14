@@ -233,7 +233,7 @@
                 </div>
                 <!-- QR Code -->
                 <div class="qr-container">
-                    <img src="./images/qr.png" alt="VNPay QR">
+                    <img src="https://img.vietqr.io/image/MB-17701770177-print.png?amount=1000" alt="VNPay QR">
                     <p class="mt-2">Scan to Pay</p>
                 </div>
             </div>
@@ -340,6 +340,10 @@
             document.getElementById("shippingFeeText").textContent = cartData.shippingFee.toLocaleString('vi-VN');
             document.getElementById("discountShipText").textContent = cartData.discountValue.toLocaleString('vi-VN');
             document.getElementById("totalText").textContent = cartData.total.toLocaleString('vi-VN');
+            const qrContainer = document.querySelector(".qr-container img");
+            const qrAmount = cartData.total || 1000; // Default amount if totalAmount is not provided
+            const orderId = Math.floor(Math.random() * 1000000000);
+            qrContainer.src = `https://img.vietqr.io/image/MB-17701770177-print.png?amount=${qrAmount}&addInfo=${orderId}`;
         }
 
         // 3. Gọi API user info => điền form
@@ -420,12 +424,23 @@
                 return;
             }
 
-            // Lấy danh sách id từ các sản phẩm
-            // Chú ý: trong cartData, id có thể là chuỗi nên ta convert thành số (nếu API yêu cầu số)
-            const ids = cartData.items.map(item => parseInt(item.id, 10));
-
-            // Chuẩn bị payload
-            const payload = { ids: ids };
+            // Tạo payload theo định dạng mới:
+            // {
+            //   "data": [
+            //     {
+            //       "ids": <cartItemId>,
+            //       "days": <số ngày thuê>,
+            //       "price": <đơn giá của item>
+            //     },
+            //     ...
+            //   ]
+            // }
+            const dataArray = cartData.items.map(item => ({
+                ids: parseInt(item.id, 10),
+                days: item.days,
+                price: item.price
+            }));
+            const payload = { data: dataArray };
 
             const token = getTokenFromCookie();
             if (!token) {
@@ -443,20 +458,20 @@
                     },
                     body: JSON.stringify(payload)
                 });
-
                 const result = await response.json();
                 console.log("Update cart response:", result);
                 if (result.code === 200) {
-                    alert("Cập nhật trạng thái giỏ hàng thành công!");
+                    alert("Thanh toán thành công!");
                     window.location.href = "/rent-result.html";
                 } else {
-                    alert("Không thể cập nhật giỏ hàng: " + (result.message || "Lỗi không xác định"));
+                    alert("Không thể Thanh toán: " + (result.message || "Lỗi không xác định"));
                 }
             } catch (error) {
                 console.error("Lỗi khi gọi API /cart/update:", error);
                 alert("Có lỗi xảy ra, vui lòng thử lại sau.");
             }
         }
+
         // Ví dụ: Gọi hàm updateCartStatus khi người dùng bấm nút xác nhận
         document.getElementById("payBtn").addEventListener("click", (e) => {
             e.preventDefault();

@@ -374,17 +374,26 @@
             const rentPriceArray = JSON.parse(rentPriceJson);
 
             let chosenPrice = 0;
-            if (days >= 7) {
-                chosenPrice = getRentPriceValue(rentPriceArray, "for_7_days");
-            } else if (days >= 3) {
-                chosenPrice = getRentPriceValue(rentPriceArray, "for_3_days");
-            } else {
-                chosenPrice = getRentPriceValue(rentPriceArray, "for_1_days");
+            let remainingDays = days;
+
+            // Tính giá theo quy tắc
+            if (remainingDays >= 7) {
+            const weeks = Math.floor(remainingDays / 7);
+            chosenPrice += weeks * getRentPriceValue(rentPriceArray, "for_7_days");
+            remainingDays %= 7;
+            }
+            if (remainingDays >= 3) {
+            const threeDayPeriods = Math.floor(remainingDays / 3);
+            chosenPrice += threeDayPeriods * getRentPriceValue(rentPriceArray, "for_3_days");
+            remainingDays %= 3;
+            }
+            if (remainingDays >= 1) {
+            chosenPrice += remainingDays * getRentPriceValue(rentPriceArray, "for_1_days");
             }
 
             const priceCell = document.getElementById(`priceCell-${itemId}`);
             if (priceCell) {
-                priceCell.textContent = parseInt(chosenPrice, 10).toLocaleString('vi-VN') + " ₫";
+            priceCell.textContent = parseInt(chosenPrice, 10).toLocaleString('vi-VN') + " ₫";
             }
             // Sau khi cập nhật đơn giá cho hàng, cập nhật lại tổng giá
             updateTotals();
@@ -428,6 +437,7 @@
             // FREESHIP: giảm 15k, FREESHIP200: giảm 30k nếu subtotal ≥ 200k, FREESHIP500: miễn phí ship nếu subtotal ≥ 500k
             if (promoCode === "FREESHIP500" && subtotal >= 500000) {
                 shippingFee = 0;
+                discountValue = 50000;
             } else if (promoCode === "FREESHIP200" && subtotal >= 200000) {
                 discountValue = 30000;
             } else if (promoCode === "FREESHIP") {

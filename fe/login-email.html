@@ -78,7 +78,7 @@
                             document.cookie = "access_token=" + result.data.access_token + "; path=/;";
                             // Hiển thị thông báo và chuyển hướng về trang đăng nhập (hoặc trang chủ)
                             alert("Đăng nhập thành công!");
-                            alert(result.data.access_token);
+                           
                             window.location.href = '/'; // thay đổi đường dẫn nếu cần
                         } else {
                             alert("Đăng nhập không thành công. Vui lòng kiểm tra lại thông tin.");
