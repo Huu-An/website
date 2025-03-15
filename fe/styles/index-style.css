@@ -76,11 +76,72 @@ body {
   border-top-right-radius: 5px;
 }
 
+/* Tuỳ chỉnh menu */
+/* Dropdown menu */
+.dropdown-menu {
+  border-radius: 8px;
+  border: none;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  position: absolute;
+  /* cần cho Bootstrap định vị qua Popper.js */
+}
+
+/* Tạo mũi tên ở cạnh trên, bên phải */
+.dropdown-menu .arrow-up {
+  position: absolute;
+  top: 0;
+  /* Đặt mũi tên dính mép trên menu */
+  right: 7%;
+  /* Căn mũi tên sang phải 20px, tùy chỉnh */
+  transform: translateY(-100%);
+  width: 0;
+  height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-bottom: 10px solid #fff;
+  /* màu nền menu */
+}
+
 #input-search:focus,
 #locationSelect:focus {
   outline: none !important;
   box-shadow: none;
 }
+
+/* Thay đổi màu nền + chữ cho ô select đang đóng */
+.custom-select.btn.btn-sm.dropdown-toggle.text-white.fw-bold {
+  background-color: #0345E4 !important;
+  /* Nền xanh */
+  color: #ffffff !important;
+  /* Chữ trắng */
+  border: none !important;
+  box-shadow: none !important;
+  -webkit-appearance: none;
+  /* Ẩn mũi tên mặc định trên một số trình duyệt */
+}
+
+/* Màu nền + chữ cho danh sách options khi mở dropdown */
+.custom-select.btn.btn-sm.dropdown-toggle.text-white.fw-bold option {
+  background-color: #ffffff !important;
+  /* Nền trắng */
+  color: #000000 !important;
+  /* Chữ đen */
+}
+
+/* (Tuỳ chọn) Khi hover option trong dropdown */
+.custom-select.btn.btn-sm.dropdown-toggle.text-white.fw-bold option:hover {
+  background-color: #0345E4 !important;
+  /* Hover nền xanh */
+  color: #ffffff !important;
+  /* Chữ trắng */
+}
+
+/* (Tuỳ chọn) Khi option được chọn (checked) */
+.custom-select.btn.btn-sm.dropdown-toggle.text-white.fw-bold option:checked {
+  background-color: #0345E4 !important;
+  color: #ffffff !important;
+}
+
 
 .checkbox-round {
   width: 2em;

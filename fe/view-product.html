@@ -14,7 +14,120 @@
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
     <link rel="stylesheet" href="./styles/view-product.css">
+    <style>
+        /* Thay đổi màu nền + chữ cho ô select đang đóng */
+        .custom-select.btn.btn-sm.dropdown-toggle.text-white.fw-bold {
+            background-color: #0345E4 !important;
+            /* Nền xanh */
+            color: #ffffff !important;
+            /* Chữ trắng */
+            border: none !important;
+            box-shadow: none !important;
+            -webkit-appearance: none;
+            /* Ẩn mũi tên mặc định trên một số trình duyệt */
+        }
+
+        /* Màu nền + chữ cho danh sách options khi mở dropdown */
+        .custom-select.btn.btn-sm.dropdown-toggle.text-white.fw-bold option {
+            background-color: #ffffff !important;
+            /* Nền trắng */
+            color: #000000 !important;
+            /* Chữ đen */
+        }
+
+        /* (Tuỳ chọn) Khi hover option trong dropdown */
+        .custom-select.btn.btn-sm.dropdown-toggle.text-white.fw-bold option:hover {
+            background-color: #0345E4 !important;
+            /* Hover nền xanh */
+            color: #ffffff !important;
+            /* Chữ trắng */
+        }
+
+        /* (Tuỳ chọn) Khi option được chọn (checked) */
+        .custom-select.btn.btn-sm.dropdown-toggle.text-white.fw-bold option:checked {
+            background-color: #0345E4 !important;
+            color: #ffffff !important;
+        }
+    </style>
 </head>
+<script>
+    // Hàm lấy giá trị cookie theo tên
+    function getCookie(name) {
+        const matches = document.cookie.match(new RegExp(
+            "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
+        ));
+        return matches ? decodeURIComponent(matches[1]) : undefined;
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+        // Kiểm tra trạng thái đăng nhập: nếu có cookie access_token thì coi là đã đăng nhập
+        const isLoggedIn = !!getCookie("access_token");
+
+        // Lấy các phần tử trong dropdown menu
+        const menuLogin = document.getElementById("menuLogin");
+        const menuAccount = document.getElementById("menuAccount");
+        const menuHistoryOption = document.getElementById("menuHistoryOption");
+        const menuDivider = document.getElementById("menuDivider");
+        const menuLogout = document.getElementById("menuLogout");
+
+        if (isLoggedIn) {
+            // Nếu đã đăng nhập: hiển thị các mục Tài khoản, Lịch sử giao dịch, Đăng xuất
+            menuAccount.style.display = "block";
+            menuHistoryOption.style.display = "block";
+            menuDivider.style.display = "block";
+            menuLogout.style.display = "block";
+            menuLogin.style.display = "none";
+        } else {
+            // Nếu chưa đăng nhập: chỉ hiển thị mục Đăng nhập
+            menuLogin.style.display = "block";
+            menuAccount.style.display = "none";
+            menuHistoryOption.style.display = "none";
+            menuDivider.style.display = "none";
+            menuLogout.style.display = "none";
+        }
+
+        // Xử lý sự kiện click cho các mục
+        menuLogin.addEventListener("click", (e) => {
+            e.preventDefault();
+            window.location.href = "/login.html";
+        });
+
+        menuAccount.addEventListener("click", (e) => {
+            e.preventDefault();
+            window.location.href = "/info.html";
+        });
+
+        menuHistoryOption.addEventListener("click", (e) => {
+            e.preventDefault();
+            window.location.href = "/history.html";
+        });
+
+        menuLogout.addEventListener("click", (e) => {
+            e.preventDefault();
+
+            // Xóa hết dữ liệu localStorage
+            localStorage.clear();
+            // Xóa hết dữ liệu sessionStorage
+            sessionStorage.clear();
+
+            // Hàm xóa tất cả cookie
+            function deleteAllCookies() {
+                const cookies = document.cookie.split(";");
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i];
+                    const eqPos = cookie.indexOf("=");
+                    const name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+                    document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/";
+                }
+            }
+            deleteAllCookies();
+
+            alert("Đã đăng xuất");
+            window.location.reload();
+        });
+
+    });
+</script>
 
 <body>
     <div class="container-fluid">
@@ -30,20 +143,21 @@
                             <span class="input-group-text" id="addon-wrapping"
                                 style="background-color: white !important; border: none;"><i
                                     class="fa fa-search"></i></span>
-                            <input type="text" class="form-control" style="border: none !important; width: 87%;"
+                            <input type="text" class="form-control" style="border: none !important; width: 80%;"
                                 placeholder="Bạn đang tìm kiếm sản phẩm gì?" aria-label="search-input"
                                 aria-describedby="addon-wrapping" id="input-search">
                             <button class="btn text-white rounded rounded-5" style="font-size: 15px;" type="button"
                                 id="btn-search">Tìm kiếm</button>
                         </div>
                     </div>
+
                     <div class="row text-white text-center mt-1 mb-5">
                         <div class="dropdown col-5">
                             <span class="align-middle"><i class="fa fa-location-arrow" aria-hidden="true"></i> Gần
                             </span>
                             <div class="btn-group">
                                 <select class="custom-select btn btn-sm dropdown-toggle text-white fw-bold"
-                                    id="inputGroupSelect01" style="font-size: 16px;">
+                                    id="locationSelect" style="font-size: 16px;">
                                     <option value="0" selected>Mỹ Thạnh, Thủ Đức</option>
                                     <option value="1">Gò Công, Tiền Giang</option>
                                     <option value="2">Xuân Thủy, Quảng Bình</option>
@@ -58,7 +172,7 @@
                                 thuê </span>
                             <div class="btn-group">
                                 <select class="custom-select btn btn-sm dropdown-toggle text-white fw-bold"
-                                    id="inputGroupSelect01" style="font-size: 16px;">
+                                    id="timeSelect" style="font-size: 16px;">
                                     <option value="0" selected>26 thg 10, 2025 - 2 thg 11, 2025</option>
                                     <option value="1">3 thg 11, 2025 - 7 thg 11, 2025</option>
                                     <option value="2">8 th 11, 2025 - 15 th 11, 2025</option>
@@ -72,23 +186,48 @@
                 </div>
             </div>
             <div class="col-4">
-                <div class="w-100 d-flex justify-content-center mt-3 pt-1">
+                <div class="w-100 d-flex justify-content-end align-items-center mt-3 pt-1">
                     <button class="btn text-white rounded rounded-5 px-3 pt-1 pb-1" id="btn-rent">Cho thuê sản
                         phẩm</button>
                     <button class="btn">
                         <img src="./images/lang-vn.jpg" alt="" style="width: 25px; height: 25px;"
-                            class="rounded rounded-circle">
+                            class="rounded-circle">
                         <span class="text-white">VN</span>
                     </button>
                     <button class="btn" id="btn-user-info">
-                        <i class="fa fa-user-circle text-white" aria-hidden="true" style="font-size: 1.3em;"></i>
+                        <i class="fa fa-user-circle text-white" style="font-size: 1.3em;"></i>
                     </button>
                     <button class="btn" id="btn-cart">
-                        <i class="fa fa-shopping-cart text-white" aria-hidden="true" style="font-size: 1.3em;"></i>
+                        <i class="fa fa-shopping-cart text-white" style="font-size: 1.3em;"></i>
                     </button>
-                    <button class="btn" id="menu-history">
-                        <i class="fa fa-bars text-white" aria-hidden="true" style="font-size: 1.3em;"></i>
-                    </button>
+
+                    <!-- Phần icon 3 gạch & dropdown -->
+                    <div class="dropdown d-flex align-items-center">
+                        <!-- Nút bấm icon “3 gạch” -->
+                        <button class="btn text-white d-flex align-items-center" id="menu-history"
+                            data-bs-toggle="dropdown" data-bs-offset="0,15" aria-expanded="false"
+                            style="vertical-align: middle;">
+                            <i class="fa fa-bars text-white" aria-hidden="true" style="font-size: 1.3em;"></i>
+                        </button>
+
+                        <!-- Menu xổ xuống (căn phải) -->
+                        <div class="dropdown-menu dropdown-menu-end p-2" aria-labelledby="menu-history"
+                            style="min-width: 160px; position: absolute;" id="menuDropdown">
+                            <!-- Mũi tên -->
+                            <div class="arrow-up"></div>
+
+                            <!-- Mục dành cho chưa đăng nhập -->
+                            <a class="dropdown-item" href="#" id="menuLogin" style="display: none;">Đăng nhập</a>
+
+                            <!-- Mục dành cho đã đăng nhập -->
+                            <a class="dropdown-item" href="#" id="menuAccount" style="display: none;">Tài khoản của
+                                tôi</a>
+                            <a class="dropdown-item" href="#" id="menuHistoryOption" style="display: none;">Lịch sử giao
+                                dịch</a>
+                            <div class="dropdown-divider" id="menuDivider" style="display: none;"></div>
+                            <a class="dropdown-item" href="#" id="menuLogout" style="display: none;">Đăng xuất</a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -350,10 +489,10 @@
                         // Nếu bạn có thêm thông tin khác như mô tả, địa chỉ, ... bạn có thể cập nhật tương tự:
                         // Ví dụ: cập nhật mô tả sản phẩm vào phần "THÔNG TIN"
                         const infoSection = document.querySelector('.product-includes p');
-                       
+
                         infoSection.textContent = product.description;
-                         
-                        
+
+
                         // Cập nhật mô tả sản phẩm vào phần "THÔNG TIN"
 
                     } else {
@@ -404,32 +543,32 @@
         // Gán sự kiện click cho các ô ngày số (chỉ click được cho các phần tử có class .day-number)
         document.querySelectorAll(".calendar-grid .day-number").forEach(dayEl => {
             dayEl.addEventListener("click", () => {
-            const selectedDays = Array.from(document.querySelectorAll(".calendar-grid .day-number.selected"))
-                .map(el => parseInt(el.textContent, 10))
-                .sort((a, b) => a - b);
+                const selectedDays = Array.from(document.querySelectorAll(".calendar-grid .day-number.selected"))
+                    .map(el => parseInt(el.textContent, 10))
+                    .sort((a, b) => a - b);
 
-            const dayNumber = parseInt(dayEl.textContent, 10);
+                const dayNumber = parseInt(dayEl.textContent, 10);
 
-            if (selectedDays.length > 0) {
-                const lastSelectedDay = selectedDays[selectedDays.length - 1];
-                const firstSelectedDay = selectedDays[0];
-                if (dayEl.classList.contains("selected")) {
-                    // Nếu bỏ chọn ngày đầu hoặc cuối thì không báo alert
-                    if (dayNumber !== firstSelectedDay && dayNumber !== lastSelectedDay) {
-                        alert("Nếu muốn thuê các ngày khác nhau bạn vui làm thêm vào giỏ hàng vào lần sau.");
-                        return;
-                    }
-                } else {
-                    // Nếu chọn ngày mới thì kiểm tra khoảng cách
-                    if (Math.abs(dayNumber - lastSelectedDay) !== 1 && Math.abs(dayNumber - firstSelectedDay) !== 1) {
-                        alert("Nếu muốn thuê các ngày khác nhau bạn vui làm thêm vào giỏ hàng vào lần sau.");
-                        return;
+                if (selectedDays.length > 0) {
+                    const lastSelectedDay = selectedDays[selectedDays.length - 1];
+                    const firstSelectedDay = selectedDays[0];
+                    if (dayEl.classList.contains("selected")) {
+                        // Nếu bỏ chọn ngày đầu hoặc cuối thì không báo alert
+                        if (dayNumber !== firstSelectedDay && dayNumber !== lastSelectedDay) {
+                            alert("Nếu muốn thuê các ngày khác nhau bạn vui làm thêm vào giỏ hàng vào lần sau.");
+                            return;
+                        }
+                    } else {
+                        // Nếu chọn ngày mới thì kiểm tra khoảng cách
+                        if (Math.abs(dayNumber - lastSelectedDay) !== 1 && Math.abs(dayNumber - firstSelectedDay) !== 1) {
+                            alert("Nếu muốn thuê các ngày khác nhau bạn vui làm thêm vào giỏ hàng vào lần sau.");
+                            return;
+                        }
                     }
                 }
-            }
 
-            dayEl.classList.toggle("selected"); // Thêm/bớt class 'selected'
-            updateBookingInfo(); // Tính toán lại tổng số ngày và tổng tiền
+                dayEl.classList.toggle("selected"); // Thêm/bớt class 'selected'
+                updateBookingInfo(); // Tính toán lại tổng số ngày và tổng tiền
             });
         });
 
@@ -559,10 +698,35 @@
         document.querySelector("#btn-cart").addEventListener("click", () => {
             window.location.href = "/cart.html";
         });
-        document.querySelector("#menu-history").addEventListener("click", () => {
-            window.location.href = "/history.html";
+
+    </script>
+    <script>
+        // Tìm đến 2 thẻ <select>
+        const locationSelect = document.querySelector("#locationSelect");
+        const timeSelect = document.querySelector("#timeSelect");
+
+        // 1) Đọc từ sessionStorage và gán lại giá trị cho <select>
+        //    (để khi F5 hoặc chuyển trang quay lại, vẫn giữ lựa chọn cũ)
+        const storedLocation = sessionStorage.getItem("selectedLocation");
+        const storedTime = sessionStorage.getItem("selectedTime");
+
+        if (storedLocation) {
+            locationSelect.value = storedLocation;
+        }
+        if (storedTime) {
+            timeSelect.value = storedTime;
+        }
+
+        // 2) Mỗi khi thay đổi <select>, lưu vào sessionStorage
+        locationSelect.addEventListener("change", (e) => {
+            sessionStorage.setItem("selectedLocation", e.target.value);
+        });
+
+        timeSelect.addEventListener("change", (e) => {
+            sessionStorage.setItem("selectedTime", e.target.value);
         });
     </script>
+
 </body>
 
 </html>
