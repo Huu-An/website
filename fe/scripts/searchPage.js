@@ -1,6 +1,6 @@
 const ROOT = "127.0.0.1:5500";
 const EXPIRE_TIME = 1;
-const API_ROOT = "http://157.66.81.167:8000"
+const API_ROOT = "http://160.30.112.24:8000"
 
 const getOAuthToken = () => {
   const url = new URLSearchParams(window.location.hash.substring(1));
@@ -95,7 +95,7 @@ const getProducts = async (searchText, sortBy, order) => {
   if (data.data.length != 0) {
     data.data.forEach((product) => {
       const id = product.id;
-      const imgURL =  "http://157.66.81.167" + product.images[0];
+      const imgURL = "http://160.30.112.24" + product.images[0];
       const rentPrice = product.rent_price[0].price;
       const formattedRentPrice = Intl.NumberFormat();
       const name = product.title;

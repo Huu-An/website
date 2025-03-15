@@ -1,6 +1,6 @@
 const ROOT = "127.0.0.1:5500";
 const EXPIRE_TIME = 5;
-const API_ROOT = "http://157.66.81.167:8000"
+const API_ROOT = "http://160.30.112.24:8000"
 
 const getOAuthToken = () => {
   const url = new URLSearchParams(window.location.hash.substring(1));

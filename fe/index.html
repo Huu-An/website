@@ -341,8 +341,8 @@
       let priceForOne = product.rent_price.find(item => item.time === "for_1_days");
       let priceText = priceForOne ? priceForOne.price : "";
 
-      // Tạo đường dẫn đầy đủ cho ảnh (giả sử host là http://157.66.81.167:8000/)
-      let imageUrl = "http://157.66.81.167" + product.images[0];
+      // Tạo đường dẫn đầy đủ cho ảnh (giả sử host là http://160.30.112.24:8000/)
+      let imageUrl = "http://160.30.112.24" + product.images[0];
 
       return `
         <div class="card card-custom border border-0 px-0" style="max-width: 400px;" onclick="findProduct(${product.id})">
@@ -369,7 +369,7 @@
     }
 
     // Gọi API lấy danh sách sản phẩm
-    fetch('http://157.66.81.167:8000/rent/list?sort_by=created_at&order=desc', {
+    fetch('http://160.30.112.24:8000/rent/list?sort_by=created_at&order=desc', {
       method: 'GET',
       headers: {
         'accept': 'application/json'

@@ -447,7 +447,7 @@
             console.error("Không có product id trong URL");
         } else {
             // Gọi API GET với rent_id tương ứng
-            fetch(`http://157.66.81.167:8000/rent/list?rent_id=${productId}&sort_by=created_at&order=desc`, {
+            fetch(`http://160.30.112.24:8000/rent/list?rent_id=${productId}&sort_by=created_at&order=desc`, {
                 method: 'GET',
                 headers: {
                     'accept': 'application/json'
@@ -460,7 +460,7 @@
                         // Cập nhật ảnh sản phẩm: giả sử dùng ảnh đầu tiên
                         const productImageEl = document.querySelector('.product-image img');
                         // Ghép host cho đường dẫn ảnh
-                        productImageEl.src = "http://157.66.81.167" + product.images[0];
+                        productImageEl.src = "http://160.30.112.24" + product.images[0];
                         productImageEl.alt = product.title;
 
                         // Cập nhật tiêu đề sản phẩm
@@ -657,7 +657,7 @@
             }
 
             try {
-                const response = await fetch("http://157.66.81.167:8000/cart/create", {
+                const response = await fetch("http://160.30.112.24:8000/cart/create", {
                     method: "POST",
                     headers: {
                         "accept": "application/json",
