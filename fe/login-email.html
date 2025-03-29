@@ -39,15 +39,14 @@
 
             </div>
             <script>
-                // Lắng nghe sự kiện submit của form đăng nhập
+               
                 document.getElementById('loginForm').addEventListener('submit', async function (event) {
-                    event.preventDefault(); // Ngăn form reload trang
-
-                    // Lấy dữ liệu từ form
+                    event.preventDefault(); 
+               
                     const email = document.getElementById('email').value;
                     const password = document.getElementById('password').value;
 
-                    // Tạo payload theo định dạng của API
+                  
                     const payload = {
                         username: email,
                         password: password,
@@ -55,7 +54,7 @@
                     };
 
                     try {
-                        // Gọi API đăng nhập
+                      
                         const response = await fetch('http://160.30.112.24:8000/users/login', {
                             method: 'POST',
                             headers: {
@@ -65,21 +64,21 @@
                             body: JSON.stringify(payload)
                         });
 
-                        // Kiểm tra phản hồi của API
+                       
                         if (!response.ok) {
                             throw new Error(`HTTP error! status: ${response.status}`);
                         }
                         const result = await response.json();
                         console.log('Response:', result);
 
-                        // Nếu đăng nhập thành công và có access_token
+                     
                         if (result.code === 200 && result.data && result.data.access_token) {
-                            // Lưu access_token vào cookie (đường dẫn "/" để toàn bộ website có thể truy cập)
+                            
                             document.cookie = "access_token=" + result.data.access_token + "; path=/;";
-                            // Hiển thị thông báo và chuyển hướng về trang đăng nhập (hoặc trang chủ)
+                     
                             alert("Đăng nhập thành công!");
 
-                            window.location.href = '/'; // thay đổi đường dẫn nếu cần
+                            window.location.href = '/';
                         } else {
                             alert("Đăng nhập không thành công. Vui lòng kiểm tra lại thông tin.");
                         }

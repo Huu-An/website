@@ -25,28 +25,28 @@
             margin-bottom: 30px;
         }
 
-        /* Ảnh sản phẩm trong giỏ hàng */
+       
         .cart-product-image {
             width: 80px;
             height: auto;
             margin-right: 10px;
         }
 
-        /* Icon xóa */
+      
         .delete-icon {
             cursor: pointer;
             color: #333;
             font-size: 1.3em;
         }
 
-        /* Tùy chỉnh select số ngày thuê */
+     
         .days-select {
             width: 70px;
         }
     </style>
 </head>
 <script>
-    // Hàm lấy giá trị cookie theo tên
+ 
     function getCookie(name) {
         const matches = document.cookie.match(new RegExp(
             "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
@@ -55,10 +55,10 @@
     }
 
     document.addEventListener("DOMContentLoaded", () => {
-        // Kiểm tra trạng thái đăng nhập: nếu có cookie access_token thì coi là đã đăng nhập
+      
         const isLoggedIn = !!getCookie("access_token");
 
-        // Lấy các phần tử trong dropdown menu
+      
         const menuLogin = document.getElementById("menuLogin");
         const menuAccount = document.getElementById("menuAccount");
         const menuHistoryOption = document.getElementById("menuHistoryOption");
@@ -66,14 +66,14 @@
         const menuLogout = document.getElementById("menuLogout");
 
         if (isLoggedIn) {
-            // Nếu đã đăng nhập: hiển thị các mục Tài khoản, Lịch sử giao dịch, Đăng xuất
+          
             menuAccount.style.display = "block";
             menuHistoryOption.style.display = "block";
             menuDivider.style.display = "block";
             menuLogout.style.display = "block";
             menuLogin.style.display = "none";
         } else {
-            // Nếu chưa đăng nhập: chỉ hiển thị mục Đăng nhập
+          
             menuLogin.style.display = "block";
             menuAccount.style.display = "none";
             menuHistoryOption.style.display = "none";
@@ -81,7 +81,7 @@
             menuLogout.style.display = "none";
         }
 
-        // Xử lý sự kiện click cho các mục
+       
         menuLogin.addEventListener("click", (e) => {
             e.preventDefault();
             window.location.href = "/login.html";
@@ -100,12 +100,12 @@
         menuLogout.addEventListener("click", (e) => {
             e.preventDefault();
 
-            // Xóa hết dữ liệu localStorage
+          
             localStorage.clear();
-            // Xóa hết dữ liệu sessionStorage
+          
             sessionStorage.clear();
 
-            // Hàm xóa tất cả cookie
+      
             function deleteAllCookies() {
                 const cookies = document.cookie.split(";");
                 for (let i = 0; i < cookies.length; i++) {
@@ -195,25 +195,24 @@
                         <i class="fa fa-shopping-cart text-white" style="font-size: 1.3em;"></i>
                     </button>
 
-                    <!-- Phần icon 3 gạch & dropdown -->
+                    
                     <div class="dropdown d-flex align-items-center">
-                        <!-- Nút bấm icon “3 gạch” -->
+            
                         <button class="btn text-white d-flex align-items-center" id="menu-history"
                             data-bs-toggle="dropdown" data-bs-offset="0,15" aria-expanded="false"
                             style="vertical-align: middle;">
                             <i class="fa fa-bars text-white" aria-hidden="true" style="font-size: 1.3em;"></i>
                         </button>
 
-                        <!-- Menu xổ xuống (căn phải) -->
                         <div class="dropdown-menu dropdown-menu-end p-2" aria-labelledby="menu-history"
                             style="min-width: 160px; position: absolute;" id="menuDropdown">
-                            <!-- Mũi tên -->
+                 
                             <div class="arrow-up"></div>
 
-                            <!-- Mục dành cho chưa đăng nhập -->
+                           
                             <a class="dropdown-item" href="#" id="menuLogin" style="display: none;">Đăng nhập</a>
 
-                            <!-- Mục dành cho đã đăng nhập -->
+                           
                             <a class="dropdown-item" href="#" id="menuAccount" style="display: none;">Tài khoản của
                                 tôi</a>
                             <a class="dropdown-item" href="#" id="menuHistoryOption" style="display: none;">Lịch sử giao
@@ -228,7 +227,7 @@
     </div>
     <div class="container">
         <h1 class="cart-header">Lịch sử mua hàng</h1>
-        <!-- Table hiển thị giỏ hàng -->
+ 
         <table class="table align-middle">
             <thead>
                 <tr>
@@ -240,10 +239,10 @@
                 </tr>
             </thead>
             <tbody id="cart-body">
-                <!-- Các dòng sản phẩm sẽ được thêm động -->
+              
             </tbody>
         </table>
-        <!-- Phần thanh toán & áp mã khuyến mãi -->
+  
     </div>
     <footer id="footer" class="row text-white column-gap-3 w-100 mx-0" style="padding: 5% 12% 12% 5%;">
         <div class="col">
@@ -303,7 +302,7 @@
         </div>
     </footer>
     <script>
-        // Hàm lấy token (giả sử lưu trong cookie "access_token=...")
+        
         function getTokenFromCookie() {
             const cookieString = document.cookie;
             const cookies = cookieString.split(';').map(c => c.trim());
@@ -316,7 +315,7 @@
         }
 
 
-        // Hàm load giỏ hàng
+    
         async function loadCart() {
             const token = getTokenFromCookie();
             if (!token) {
@@ -337,7 +336,7 @@
                     const cartItems = result.data;
                     const cartBody = document.getElementById("cart-body");
                     cartBody.innerHTML = cartItems.map(generateCartRow).join("");
-                    // Sau khi render xong, cập nhật tổng giá
+                    
                     updateTotals();
                     console.log("Price cells:", document.querySelectorAll('[id^="priceCell-"]'));
                 } else {
@@ -348,9 +347,9 @@
             }
         }
 
-        // Hàm tạo dòng HTML cho mỗi item
+     
         function generateCartRow(item) {
-            // Format giá (chuyển thành số và định dạng hiển thị)
+          
             const priceFormatted = parseInt(item.price, 10).toLocaleString('vi-VN');
             return `
             <tr>
@@ -372,7 +371,7 @@
           `;
         }
 
-        // Tạo option từ 1 đến 31 cho số ngày thuê
+        
         function generateDayOptions(selectedDays) {
             let options = "";
             for (let i = 1; i <= 31; i++) {
@@ -383,7 +382,7 @@
         }
 
 
-        // Khi DOM load xong, load giỏ hàng và cập nhật tổng giá
+       
         document.addEventListener("DOMContentLoaded", () => {
             loadCart();
         });
@@ -399,12 +398,11 @@
 
     </script>
     <script>
-        // Tìm đến 2 thẻ <select>
+      
         const locationSelect = document.querySelector("#locationSelect");
         const timeSelect = document.querySelector("#timeSelect");
 
-        // 1) Đọc từ sessionStorage và gán lại giá trị cho <select>
-        //    (để khi F5 hoặc chuyển trang quay lại, vẫn giữ lựa chọn cũ)
+       
         const storedLocation = sessionStorage.getItem("selectedLocation");
         const storedTime = sessionStorage.getItem("selectedTime");
 
@@ -415,7 +413,7 @@
             timeSelect.value = storedTime;
         }
 
-        // 2) Mỗi khi thay đổi <select>, lưu vào sessionStorage
+      
         locationSelect.addEventListener("change", (e) => {
             sessionStorage.setItem("selectedLocation", e.target.value);
         });

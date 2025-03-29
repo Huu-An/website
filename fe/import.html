@@ -255,7 +255,7 @@
   </style>
 </head>
 <script>
-  // Hàm lấy giá trị cookie theo tên
+ 
   function getCookie(name) {
     const matches = document.cookie.match(new RegExp(
       "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
@@ -264,10 +264,10 @@
   }
 
   document.addEventListener("DOMContentLoaded", () => {
-    // Kiểm tra trạng thái đăng nhập: nếu có cookie access_token thì coi là đã đăng nhập
+  
     const isLoggedIn = !!getCookie("access_token");
 
-    // Lấy các phần tử trong dropdown menu
+ 
     const menuLogin = document.getElementById("menuLogin");
     const menuAccount = document.getElementById("menuAccount");
     const menuHistoryOption = document.getElementById("menuHistoryOption");
@@ -275,14 +275,14 @@
     const menuLogout = document.getElementById("menuLogout");
 
     if (isLoggedIn) {
-      // Nếu đã đăng nhập: hiển thị các mục Tài khoản, Lịch sử giao dịch, Đăng xuất
+    
       menuAccount.style.display = "block";
       menuHistoryOption.style.display = "block";
       menuDivider.style.display = "block";
       menuLogout.style.display = "block";
       menuLogin.style.display = "none";
     } else {
-      // Nếu chưa đăng nhập: chỉ hiển thị mục Đăng nhập
+     
       menuLogin.style.display = "block";
       menuAccount.style.display = "none";
       menuHistoryOption.style.display = "none";
@@ -290,7 +290,7 @@
       menuLogout.style.display = "none";
     }
 
-    // Xử lý sự kiện click cho các mục
+  
     menuLogin.addEventListener("click", (e) => {
       e.preventDefault();
       window.location.href = "/login.html";
@@ -309,12 +309,12 @@
     menuLogout.addEventListener("click", (e) => {
       e.preventDefault();
 
-      // Xóa hết dữ liệu localStorage
+     
       localStorage.clear();
-      // Xóa hết dữ liệu sessionStorage
+    
       sessionStorage.clear();
 
-      // Hàm xóa tất cả cookie
+     
       function deleteAllCookies() {
         const cookies = document.cookie.split(";");
         for (let i = 0; i < cookies.length; i++) {
@@ -399,24 +399,24 @@
             <i class="fa fa-shopping-cart text-white" style="font-size: 1.3em;"></i>
           </button>
 
-          <!-- Phần icon 3 gạch & dropdown -->
+      
           <div class="dropdown d-flex align-items-center">
-            <!-- Nút bấm icon “3 gạch” -->
+       
             <button class="btn text-white d-flex align-items-center" id="menu-history" data-bs-toggle="dropdown"
               data-bs-offset="0,15" aria-expanded="false" style="vertical-align: middle;">
               <i class="fa fa-bars text-white" aria-hidden="true" style="font-size: 1.3em;"></i>
             </button>
 
-            <!-- Menu xổ xuống (căn phải) -->
+          
             <div class="dropdown-menu dropdown-menu-end p-2" aria-labelledby="menu-history"
               style="min-width: 160px; position: absolute;" id="menuDropdown">
-              <!-- Mũi tên -->
+           
               <div class="arrow-up"></div>
 
-              <!-- Mục dành cho chưa đăng nhập -->
+            
               <a class="dropdown-item" href="#" id="menuLogin" style="display: none;">Đăng nhập</a>
 
-              <!-- Mục dành cho đã đăng nhập -->
+             
               <a class="dropdown-item" href="#" id="menuAccount" style="display: none;">Tài khoản của tôi</a>
               <a class="dropdown-item" href="#" id="menuHistoryOption" style="display: none;">Lịch sử giao dịch</a>
               <div class="dropdown-divider" id="menuDivider" style="display: none;"></div>
@@ -427,11 +427,11 @@
       </div>
     </div>
   </div>
-  <!-- Nội dung chính -->
+ 
   <div class="container">
     <h2 class="page-title">Bạn muốn cho thuê sản phẩm gì?</h2>
     <div class="form-wrapper">
-      <!-- Bước 1 -->
+    
       <div class="form-step">
         <div class="step-header">
           <div class="step-number">1</div>
@@ -443,11 +443,11 @@
             <option value="1">Máy ảnh</option>
             <option value="2">Điện thoại</option>
             <option value="3">Laptop</option>
-            <!-- Thêm các danh mục khác -->
+           
           </select>
         </div>
       </div>
-      <!-- Bước 2 -->
+   
       <div class="form-step">
         <div class="step-header">
           <div class="step-number">2</div>
@@ -460,7 +460,7 @@
           <textarea id="description" name="description" placeholder="Càng chi tiết càng tốt" required></textarea>
         </div>
       </div>
-      <!-- Bước 3 -->
+     
       <div class="form-step">
         <div class="step-header">
           <div class="step-number">3</div>
@@ -469,7 +469,7 @@
         <div class="step-input">
           <small>Tải lên ít nhất 5 hình ảnh và 2 video (tỷ lệ ngang 4:3). Ảnh chân dung sẽ không được hiển thị đầy
             đủ.</small>
-          <!-- Bố trí 8 khung hình (hoặc tuỳ ý) để người dùng upload -->
+       
           <div class="image-grid" style="margin-top:15px;">
             <div class="image-item" id="icon-1">
               <span class="camera-icon">&#128247;</span>
@@ -496,12 +496,11 @@
               <span class="camera-icon">&#128247;</span>
             </div>
           </div>
-          <!-- Input file thật (ẩn hoặc tuỳ ý) -->
-          <!-- <input type="file" name="images[]" multiple style="margin-top:10px;">-->
+         
           <input type="file" id="fileInput" accept="image/*" style="display: none;">
         </div>
       </div>
-      <!-- Bước 4 -->
+    
       <div class="form-step">
         <div class="step-header">
           <div class="step-number">4</div>
@@ -526,7 +525,7 @@
             nhất.</small>
         </div>
       </div>
-      <!-- Bước 5 -->
+  
       <div class="form-step">
         <div class="step-header">
           <div class="step-number">5</div>
@@ -536,7 +535,7 @@
           <input type="text" name="delivery" placeholder="Nhập địa chỉ giao hàng" required>
         </div>
       </div>
-      <!-- Bước 6 -->
+     
       <div class="form-step">
         <div class="step-header">
           <div class="step-number">6</div>
@@ -552,7 +551,7 @@
           <small>Dễ - Hủy trước 2 ngày so với thời gian thuê, 100% hoàn lại. Trước 1 ngày, 50% hoàn lại.</small>
         </div>
       </div>
-      <!-- Bước 7 -->
+   
       <div class="form-step">
         <div class="step-header">
           <div class="step-number">7</div>
@@ -563,7 +562,7 @@
             required>
         </div>
       </div>
-      <!-- Nút Đăng tin -->
+   
       <button type="submit" class="submit-btn" id="btn-post">Đăng tin!</button>
     </div>
   </div>
@@ -662,7 +661,7 @@
       const dieuKhoanHuy = document.querySelector("select[name=cancellation]");
       const giaTri = document.querySelector("input[name=product_value]");
 
-      // Thu thập các ảnh đã upload (chỉ lấy những ảnh có src dạng base64)
+   
       let imagesArray = [];
       document.querySelectorAll(".image-item img").forEach(img => {
         if (img.src && img.src.startsWith("data:image/")) {
@@ -746,12 +745,11 @@
 
   </script>
   <script>
-    // Tìm đến 2 thẻ <select>
+   
     const locationSelect = document.querySelector("#locationSelect");
     const timeSelect = document.querySelector("#timeSelect");
 
-    // 1) Đọc từ sessionStorage và gán lại giá trị cho <select>
-    //    (để khi F5 hoặc chuyển trang quay lại, vẫn giữ lựa chọn cũ)
+   
     const storedLocation = sessionStorage.getItem("selectedLocation");
     const storedTime = sessionStorage.getItem("selectedTime");
 
@@ -762,7 +760,7 @@
       timeSelect.value = storedTime;
     }
 
-    // 2) Mỗi khi thay đổi <select>, lưu vào sessionStorage
+   
     locationSelect.addEventListener("change", (e) => {
       sessionStorage.setItem("selectedLocation", e.target.value);
     });

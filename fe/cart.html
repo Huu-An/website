@@ -46,7 +46,6 @@
     </style>
 </head>
 <script>
-    // Hàm lấy giá trị cookie theo tên
     function getCookie(name) {
         const matches = document.cookie.match(new RegExp(
             "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
@@ -55,10 +54,10 @@
     }
 
     document.addEventListener("DOMContentLoaded", () => {
-        // Kiểm tra trạng thái đăng nhập: nếu có cookie access_token thì coi là đã đăng nhập
+   
         const isLoggedIn = !!getCookie("access_token");
 
-        // Lấy các phần tử trong dropdown menu
+     
         const menuLogin = document.getElementById("menuLogin");
         const menuAccount = document.getElementById("menuAccount");
         const menuHistoryOption = document.getElementById("menuHistoryOption");
@@ -66,14 +65,14 @@
         const menuLogout = document.getElementById("menuLogout");
 
         if (isLoggedIn) {
-            // Nếu đã đăng nhập: hiển thị các mục Tài khoản, Lịch sử giao dịch, Đăng xuất
+       
             menuAccount.style.display = "block";
             menuHistoryOption.style.display = "block";
             menuDivider.style.display = "block";
             menuLogout.style.display = "block";
             menuLogin.style.display = "none";
         } else {
-            // Nếu chưa đăng nhập: chỉ hiển thị mục Đăng nhập
+         
             menuLogin.style.display = "block";
             menuAccount.style.display = "none";
             menuHistoryOption.style.display = "none";
@@ -81,7 +80,7 @@
             menuLogout.style.display = "none";
         }
 
-        // Xử lý sự kiện click cho các mục
+     
         menuLogin.addEventListener("click", (e) => {
             e.preventDefault();
             window.location.href = "/login.html";
@@ -100,12 +99,11 @@
         menuLogout.addEventListener("click", (e) => {
             e.preventDefault();
 
-            // Xóa hết dữ liệu localStorage
             localStorage.clear();
-            // Xóa hết dữ liệu sessionStorage
+          
             sessionStorage.clear();
 
-            // Hàm xóa tất cả cookie
+          
             function deleteAllCookies() {
                 const cookies = document.cookie.split(";");
                 for (let i = 0; i < cookies.length; i++) {
@@ -355,7 +353,7 @@
         </div>
     </footer>
     <script>
-        // Hàm lấy token (giả sử lưu trong cookie "access_token=...")
+     
         function getTokenFromCookie() {
             const cookieString = document.cookie;
             const cookies = cookieString.split(';').map(c => c.trim());
@@ -367,7 +365,7 @@
             return "";
         }
 
-        // Hàm xóa 1 item khỏi giỏ hàng
+     
         async function removeItem(cartItemId) {
             if (!confirm("Bạn có chắc muốn xóa sản phẩm này khỏi giỏ hàng?")) {
                 return;
@@ -390,7 +388,7 @@
                 console.log("Delete response:", data);
                 if (data.code === 200) {
                     alert("Xóa sản phẩm khỏi giỏ hàng thành công!");
-                    loadCart(); // Tải lại giỏ hàng sau khi xóa
+                    loadCart();
                 } else {
                     alert("Không xóa được sản phẩm: " + (data.message || "Lỗi không xác định"));
                 }
@@ -400,7 +398,7 @@
             }
         }
 
-        // Hàm load giỏ hàng
+     
         async function loadCart() {
             const token = getTokenFromCookie();
             if (!token) {
@@ -421,7 +419,7 @@
                     const cartItems = result.data;
                     const cartBody = document.getElementById("cart-body");
                     cartBody.innerHTML = cartItems.map(generateCartRow).join("");
-                    // Sau khi render xong, cập nhật tổng giá
+
                     updateTotals();
                     console.log("Price cells:", document.querySelectorAll('[id^="priceCell-"]'));
                 } else {
@@ -432,9 +430,9 @@
             }
         }
 
-        // Hàm tạo dòng HTML cho mỗi item
+      
         function generateCartRow(item) {
-            // Format giá (chuyển thành số và định dạng hiển thị)
+          
             const priceFormatted = parseInt(item.price, 10).toLocaleString('vi-VN');
             return `
             <tr>
@@ -460,7 +458,6 @@
           `;
         }
 
-        // Tạo option từ 1 đến 31 cho số ngày thuê
         function generateDayOptions(selectedDays) {
             let options = "";
             for (let i = 1; i <= 31; i++) {
@@ -470,7 +467,7 @@
             return options;
         }
 
-        // Hàm xử lý khi thay đổi số ngày thuê
+       
         function onDaysChange(event) {
             const selectEl = event.target;
             const days = parseInt(selectEl.value, 10);
@@ -481,7 +478,7 @@
             let chosenPrice = 0;
             let remainingDays = days;
 
-            // Tính giá theo quy tắc
+            
             if (remainingDays >= 7) {
                 const weeks = Math.floor(remainingDays / 7);
                 chosenPrice += weeks * getRentPriceValue(rentPriceArray, "for_7_days");
@@ -500,29 +497,29 @@
             if (priceCell) {
                 priceCell.textContent = parseInt(chosenPrice, 10).toLocaleString('vi-VN') + " ₫";
             }
-            // Sau khi cập nhật đơn giá cho hàng, cập nhật lại tổng giá
+           
             updateTotals();
         }
 
-        // Hàm tiện ích: Lấy giá theo key (for_1_days, for_3_days, for_7_days)
+       
         function getRentPriceValue(rentPriceArray, timeKey) {
             const obj = rentPriceArray.find(rp => rp.time === timeKey);
             return obj ? obj.price : 0;
         }
 
-        // Các biến toàn cục cho tổng giá trị
+       
         let discountValue = 0;
-        let shippingFee = 15000; // Phí ship mặc định
+        let shippingFee = 15000; 
         let subtotal = 0;
         let total = 0;
 
-        // Hàm cập nhật tổng giá trị
+        /
         function updateTotals() {
-            // Lấy tất cả các ô đơn giá với id bắt đầu bằng "priceCell-"
+          
             const priceCells = document.querySelectorAll('[id^="priceCell-"]');
             subtotal = 0;
             priceCells.forEach(cell => {
-                // Lấy textContent và loại bỏ các ký tự không phải số
+             
                 let priceStr = cell.textContent;
                 let priceNum = parseInt(priceStr.replace(/[^\d]/g, ''), 10);
                 if (!isNaN(priceNum)) {
@@ -530,16 +527,15 @@
                 }
             });
 
-            // Lấy mã khuyến mãi từ input
+          
             const promoInput = document.getElementById("promoCodeInput");
             let promoCode = promoInput ? promoInput.value.trim() : "";
 
-            // Reset discount và phí ship
+          
             discountValue = 0;
             shippingFee = 15000;
 
-            // Áp dụng các điều kiện giảm giá:
-            // FREESHIP: giảm 15k, FREESHIP200: giảm 30k nếu subtotal ≥ 200k, FREESHIP500: miễn phí ship nếu subtotal ≥ 500k
+        
             if (promoCode === "FREESHIP500" && subtotal >= 500000) {
                 shippingFee = 0;
                 discountValue = 50000;
@@ -551,29 +547,28 @@
 
             total = subtotal + shippingFee - discountValue;
 
-            // Cập nhật giao diện
+        
             document.getElementById("subtotalText").textContent = subtotal.toLocaleString('vi-VN');
             document.getElementById("shippingFeeText").textContent = shippingFee.toLocaleString('vi-VN');
             document.getElementById("discountShip").textContent = discountValue.toLocaleString('vi-VN');
             document.getElementById("totalText").textContent = total.toLocaleString('vi-VN');
-            // 6. Thu thập thông tin từng sản phẩm và lưu vào localStorage
+          
             const cartBody = document.getElementById("cart-body");
             const rowEls = cartBody.querySelectorAll("tr");
             const cartStorageItems = [];
 
             rowEls.forEach(row => {
-                // Lấy ảnh, tên, số ngày, đơn giá
+              
                 const imgEl = row.querySelector("img.cart-product-image");
                 const titleEl = row.querySelector("td > div > span");
                 const selectEl = row.querySelector("select.days-select");
                 const priceCell = row.querySelector('[id^="priceCell-"]');
 
-                // Lấy tên, ảnh, số ngày thuê
+               
                 const itemName = titleEl ? titleEl.textContent.trim() : "";
                 const itemImage = imgEl ? imgEl.src : "";
                 const itemDays = selectEl ? parseInt(selectEl.value, 10) : 1;
 
-                // Lấy đơn giá
                 let itemPrice = 0;
                 if (priceCell) {
                     const cellPriceStr = priceCell.textContent.replace(/[^\d]/g, '');
@@ -589,7 +584,7 @@
                 });
             });
 
-            // 7. Tạo object chứa thông tin giỏ
+          
             const cartStorageData = {
                 items: cartStorageItems,
                 shippingFee,
@@ -597,17 +592,17 @@
                 total
             };
 
-            // 8. Lưu vào localStorage
+          
             localStorage.setItem("cartData", JSON.stringify(cartStorageData));
         }
 
-        // Gán sự kiện "input" cho ô mã khuyến mãi để cập nhật tổng ngay khi người dùng nhập
+      
         const promoCodeInput = document.getElementById("promoCodeInput");
         if (promoCodeInput) {
             promoCodeInput.addEventListener("input", updateTotals);
         }
 
-        // Khi DOM load xong, load giỏ hàng và cập nhật tổng giá
+      
         document.addEventListener("DOMContentLoaded", () => {
             loadCart();
         });
@@ -624,15 +619,14 @@
             window.location.href = "/import.html";
         });
 
-        // Ngoài ra, nếu có thao tác khác thay đổi giỏ hàng, hãy gọi updateTotals() sau đó.
+   
     </script>
     <script>
-        // Tìm đến 2 thẻ <select>
+ 
         const locationSelect = document.querySelector("#locationSelect");
         const timeSelect = document.querySelector("#timeSelect");
 
-        // 1) Đọc từ sessionStorage và gán lại giá trị cho <select>
-        //    (để khi F5 hoặc chuyển trang quay lại, vẫn giữ lựa chọn cũ)
+     
         const storedLocation = sessionStorage.getItem("selectedLocation");
         const storedTime = sessionStorage.getItem("selectedTime");
 
@@ -643,7 +637,7 @@
             timeSelect.value = storedTime;
         }
 
-        // 2) Mỗi khi thay đổi <select>, lưu vào sessionStorage
+     
         locationSelect.addEventListener("change", (e) => {
             sessionStorage.setItem("selectedLocation", e.target.value);
         });

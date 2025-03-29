@@ -15,7 +15,7 @@
 </head>
 
 <script>
-  // Hàm lấy giá trị cookie theo tên
+
   function getCookie(name) {
     const matches = document.cookie.match(new RegExp(
       "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
@@ -24,10 +24,10 @@
   }
 
   document.addEventListener("DOMContentLoaded", () => {
-    // Kiểm tra trạng thái đăng nhập: nếu có cookie access_token thì coi là đã đăng nhập
+  
     const isLoggedIn = !!getCookie("access_token");
 
-    // Lấy các phần tử trong dropdown menu
+   
     const menuLogin = document.getElementById("menuLogin");
     const menuAccount = document.getElementById("menuAccount");
     const menuHistoryOption = document.getElementById("menuHistoryOption");
@@ -35,14 +35,14 @@
     const menuLogout = document.getElementById("menuLogout");
 
     if (isLoggedIn) {
-      // Nếu đã đăng nhập: hiển thị các mục Tài khoản, Lịch sử giao dịch, Đăng xuất
+   
       menuAccount.style.display = "block";
       menuHistoryOption.style.display = "block";
       menuDivider.style.display = "block";
       menuLogout.style.display = "block";
       menuLogin.style.display = "none";
     } else {
-      // Nếu chưa đăng nhập: chỉ hiển thị mục Đăng nhập
+    
       menuLogin.style.display = "block";
       menuAccount.style.display = "none";
       menuHistoryOption.style.display = "none";
@@ -50,7 +50,7 @@
       menuLogout.style.display = "none";
     }
 
-    // Xử lý sự kiện click cho các mục
+    
     menuLogin.addEventListener("click", (e) => {
       e.preventDefault();
       window.location.href = "/login.html";
@@ -69,12 +69,12 @@
     menuLogout.addEventListener("click", (e) => {
       e.preventDefault();
 
-      // Xóa hết dữ liệu localStorage
+      
       localStorage.clear();
-      // Xóa hết dữ liệu sessionStorage
+     
       sessionStorage.clear();
 
-      // Hàm xóa tất cả cookie
+      
       function deleteAllCookies() {
         const cookies = document.cookie.split(";");
         for (let i = 0; i < cookies.length; i++) {
@@ -114,24 +114,24 @@
         </button>
 
 
-        <!-- Phần icon 3 gạch & dropdown -->
+      
         <div class="dropdown d-flex align-items-center">
-          <!-- Nút bấm icon “3 gạch” -->
+        
           <button class="btn text-white d-flex align-items-center" id="menu-history" data-bs-toggle="dropdown"
             data-bs-offset="0,15" aria-expanded="false" style="vertical-align: middle;">
             <i class="fa fa-bars text-white" aria-hidden="true" style="font-size: 1.3em;"></i>
           </button>
 
-          <!-- Menu xổ xuống (căn phải) -->
+    
           <div class="dropdown-menu dropdown-menu-end p-2" aria-labelledby="menu-history"
             style="min-width: 160px; position: absolute;" id="menuDropdown">
-            <!-- Mũi tên -->
+        
             <div class="arrow-up"></div>
 
-            <!-- Mục dành cho chưa đăng nhập -->
+         
             <a class="dropdown-item" href="#" id="menuLogin" style="display: none;">Đăng nhập</a>
 
-            <!-- Mục dành cho đã đăng nhập -->
+           
             <a class="dropdown-item" href="#" id="menuAccount" style="display: none;">Tài khoản của tôi</a>
             <a class="dropdown-item" href="#" id="menuHistoryOption" style="display: none;">Lịch sử giao dịch</a>
             <div class="dropdown-divider" id="menuDivider" style="display: none;"></div>
@@ -335,13 +335,13 @@
         alert("Vui lòng không bỏ trống nội dung tìm kiếm");
       }
     });
-    // Hàm chuyển đổi một sản phẩm thành HTML card
+  
     function generateProductCard(product) {
-      // Lấy giá cho 1 ngày (giả sử trong mảng rent_price, ta chọn phần có time là "for_1_days")
+   
       let priceForOne = product.rent_price.find(item => item.time === "for_1_days");
       let priceText = priceForOne ? priceForOne.price : "";
 
-      // Tạo đường dẫn đầy đủ cho ảnh (giả sử host là http://160.30.112.24:8000/)
+   
       let imageUrl = "http://160.30.112.24" + product.images[0];
 
       return `
@@ -363,12 +363,12 @@
       `;
     }
 
-    // Hàm chuyển đến trang chi tiết sản phẩm
+   
     function findProduct(productId) {
       window.location.href = "/view-product.html?id=" + productId;
     }
 
-    // Gọi API lấy danh sách sản phẩm
+   
     fetch('http://160.30.112.24:8000/rent/list?sort_by=created_at&order=desc', {
       method: 'GET',
       headers: {
@@ -378,19 +378,17 @@
       .then(response => response.json())
       .then(data => {
         if (data.code === 200 && Array.isArray(data.data)) {
-          // Giả sử "Sản phẩm được thuê nhiều" lấy một nửa đầu danh sách,
-          // và "Sản phẩm mới" lấy toàn bộ danh sách hoặc nửa sau.
+      
           const products = data.data;
           const popularProducts = products
-          const newProducts = products; // Hoặc products.slice(Math.ceil(products.length / 2))
+          const newProducts = products;
 
-          // Cập nhật nội dung cho phần "Sản phẩm được thuê nhiều"
+      
           const popularContainer = document.getElementById("popular-products");
           if (popularContainer) {
             popularContainer.innerHTML = popularProducts.map(generateProductCard).join("");
           }
 
-          // Cập nhật nội dung cho phần "Sản phẩm mới"
           const newContainer = document.getElementById("new-products");
           if (newContainer) {
             newContainer.innerHTML = newProducts.map(generateProductCard).join("");
@@ -414,12 +412,11 @@
 
   </script>
   <script>
-    // Tìm đến 2 thẻ <select>
+ 
     const locationSelect = document.querySelector("#locationSelect");
     const timeSelect = document.querySelector("#timeSelect");
 
-    // 1) Đọc từ sessionStorage và gán lại giá trị cho <select>
-    //    (để khi F5 hoặc chuyển trang quay lại, vẫn giữ lựa chọn cũ)
+   
     const storedLocation = sessionStorage.getItem("selectedLocation");
     const storedTime = sessionStorage.getItem("selectedTime");
 
@@ -430,7 +427,7 @@
       timeSelect.value = storedTime;
     }
 
-    // 2) Mỗi khi thay đổi <select>, lưu vào sessionStorage
+  
     locationSelect.addEventListener("change", (e) => {
       sessionStorage.setItem("selectedLocation", e.target.value);
     });

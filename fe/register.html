@@ -43,11 +43,11 @@
     </div>
   </div>
   <script>
-    // Lắng nghe sự kiện submit của form
-    document.getElementById('dangKyForm').addEventListener('submit', async (event) => {
-      event.preventDefault(); // Ngăn chặn form tự động reload trang
 
-      // Lấy dữ liệu từ các ô input
+    document.getElementById('dangKyForm').addEventListener('submit', async (event) => {
+      event.preventDefault(); 
+
+      
       const fullname = document.getElementById('ten').value;
       const phone = document.getElementById('sodienthoai').value;
       const address = document.getElementById('address').value;
@@ -55,7 +55,7 @@
       const username = document.getElementById('email').value;
       const password = document.getElementById('matkhau').value;
 
-      // Tạo đối tượng data theo yêu cầu của API
+ 
       const dataToSend = {
         fullname: fullname,
         phone: phone,
@@ -66,7 +66,7 @@
       };
 
       try {
-        // Gọi API qua fetch
+      
         const response = await fetch('http://160.30.112.24:8000/users/create', {
           method: 'POST',
           headers: {
@@ -76,16 +76,16 @@
           body: JSON.stringify(dataToSend)
         });
 
-        // Kiểm tra xem response có thành công không
+     
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
-          // Lấy kết quả trả về từ server (nếu có)
+         
         }
         const result = await response.json();
         console.log('Kết quả trả về:', result);
 
 
-        // Hiển thị thông báo hoặc chuyển hướng theo nhu cầu
+      
         alert('Đăng ký thành công!');
         window.location.href = "/login-email.html";
       } catch (error) {

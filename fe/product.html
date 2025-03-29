@@ -16,7 +16,7 @@
 <style>
 </style>
 <script>
-  // Hàm lấy giá trị cookie theo tên
+ 
   function getCookie(name) {
     const matches = document.cookie.match(new RegExp(
       "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
@@ -25,10 +25,10 @@
   }
 
   document.addEventListener("DOMContentLoaded", () => {
-    // Kiểm tra trạng thái đăng nhập: nếu có cookie access_token thì coi là đã đăng nhập
+    
     const isLoggedIn = !!getCookie("access_token");
 
-    // Lấy các phần tử trong dropdown menu
+
     const menuLogin = document.getElementById("menuLogin");
     const menuAccount = document.getElementById("menuAccount");
     const menuHistoryOption = document.getElementById("menuHistoryOption");
@@ -36,14 +36,14 @@
     const menuLogout = document.getElementById("menuLogout");
 
     if (isLoggedIn) {
-      // Nếu đã đăng nhập: hiển thị các mục Tài khoản, Lịch sử giao dịch, Đăng xuất
+     
       menuAccount.style.display = "block";
       menuHistoryOption.style.display = "block";
       menuDivider.style.display = "block";
       menuLogout.style.display = "block";
       menuLogin.style.display = "none";
     } else {
-      // Nếu chưa đăng nhập: chỉ hiển thị mục Đăng nhập
+   
       menuLogin.style.display = "block";
       menuAccount.style.display = "none";
       menuHistoryOption.style.display = "none";
@@ -51,7 +51,7 @@
       menuLogout.style.display = "none";
     }
 
-    // Xử lý sự kiện click cho các mục
+   
     menuLogin.addEventListener("click", (e) => {
       e.preventDefault();
       window.location.href = "/login.html";
@@ -70,12 +70,12 @@
     menuLogout.addEventListener("click", (e) => {
       e.preventDefault();
 
-      // Xóa hết dữ liệu localStorage
+     
       localStorage.clear();
-      // Xóa hết dữ liệu sessionStorage
+   
       sessionStorage.clear();
 
-      // Hàm xóa tất cả cookie
+     
       function deleteAllCookies() {
         const cookies = document.cookie.split(";");
         for (let i = 0; i < cookies.length; i++) {
@@ -245,12 +245,11 @@
   </footer>
   <script src="./scripts/searchPage.js"></script>
   <script>
-    // Tìm đến 2 thẻ <select>
+   
     const locationSelect = document.querySelector("#locationSelect");
     const timeSelect = document.querySelector("#timeSelect");
 
-    // 1) Đọc từ sessionStorage và gán lại giá trị cho <select>
-    //    (để khi F5 hoặc chuyển trang quay lại, vẫn giữ lựa chọn cũ)
+    
     const storedLocation = sessionStorage.getItem("selectedLocation");
     const storedTime = sessionStorage.getItem("selectedTime");
 
@@ -261,7 +260,7 @@
       timeSelect.value = storedTime;
     }
 
-    // 2) Mỗi khi thay đổi <select>, lưu vào sessionStorage
+    
     locationSelect.addEventListener("change", (e) => {
       sessionStorage.setItem("selectedLocation", e.target.value);
     });

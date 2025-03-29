@@ -38,7 +38,7 @@ const getAccessToken = async (user) => {
   const data = await response.json();
   console.log(data)
   if (data.data.access_token) {
-    // save token
+
     const now = new Date();
     const expireTime = new Date(now.getTime() + EXPIRE_TIME * 60000).toUTCString();
     const cookieTemplate = `token=${data.data.access_token}; expires=${expireTime};`;
